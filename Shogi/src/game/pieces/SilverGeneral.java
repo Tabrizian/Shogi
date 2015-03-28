@@ -1,4 +1,6 @@
 package game.pieces;
+import java.util.ArrayList;
+
 import game.Piece;
 import game.Position;
 import game.Table;
@@ -11,7 +13,7 @@ public class SilverGeneral extends Piece{
 	public SilverGeneral(Table table){
 		Position defaultPos = getDefaultPos();
 		setPos(defaultPos);
-		table.setTableCell(defaultPos, 'S');
+		table.setTableCell(defaultPos, this);
 		population++;
 	}
 	
@@ -32,11 +34,16 @@ public class SilverGeneral extends Piece{
 		else
 			return (new Position(6,8));
 	}
+	
+	@Override
+	public String toString() {
+		return "S";
+	}
 
 	@Override
-	public boolean isAllowdMoving(Position dst) {
+	public ArrayList<Position> getAllowedCells(Table table) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }

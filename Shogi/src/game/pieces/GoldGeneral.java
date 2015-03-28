@@ -1,4 +1,6 @@
 package game.pieces;
+import java.util.ArrayList;
+
 import game.Piece;
 import game.Position;
 import game.Table;
@@ -10,7 +12,7 @@ public class GoldGeneral extends Piece {
 	public GoldGeneral(Table table) {
 		Position defaultPos = getDefaultPos();
 		setPos(defaultPos);
-		table.setTableCell(defaultPos, 'G');
+		table.setTableCell(defaultPos, this);
 		population++;
 	}
 
@@ -33,9 +35,16 @@ public class GoldGeneral extends Piece {
 	}
 
 	@Override
-	public boolean isAllowdMoving(Position dst) {
-		// TODO Auto-generated method stub
-		return false;
+	public String toString() {
+		return "G";
 	}
+
+	@Override
+	public ArrayList<Position> getAllowedCells(Table table) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }

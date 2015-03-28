@@ -1,7 +1,10 @@
 package game.pieces;
+import game.Direction;
 import game.Piece;
 import game.Position;
 import game.Table;
+
+import java.util.ArrayList;
 
 public class King extends Piece {
 	
@@ -10,7 +13,7 @@ public class King extends Piece {
 	public King(Table table) {
 		Position defaultPos = getDefaultPos();
 		setPos(defaultPos);
-		table.setTableCell(defaultPos, 'K');
+		table.setTableCell(defaultPos, this);
 		population++;
 	}
 
@@ -27,9 +30,26 @@ public class King extends Piece {
 			return (new Position(4, 8));
 	}
 
+	
+	
 	@Override
-	public boolean isAllowdMoving(Position dst) {
-		// TODO Auto-generated method stub
-		return false;
+	public String toString() {
+		return "K";
+	}
+
+	@Override
+	public ArrayList<Position> getAllowedCells(Table table) {
+		ArrayList<Position> positions = new ArrayList<>();
+		for (int i = 0; i < 8; i++) {
+			Position currentPos = this.getPos().getNextPos(Direction.values()[i]);
+			
+			try {
+				if(table.isEmpty(currentPos)){
+					positions.add(currentPos);
+				}
+			} catch (Exception e) {
+			}
+		}
+		return positions;
 	}
 }

@@ -39,17 +39,15 @@ public class Player {
 		this.pieces = pieces;
 	}
 	
-	public Piece getPiece(Position pos){
-		for (int i = 0; i < pieces.size(); i++) {
-			if(pieces.get(i).getPos().equals(pos)){
-				return pieces.get(i);
-			}
-		}
-		return null;
-	}
 	
-//	public Event move(){
-//		
-//	}
+	public void move(int turn,Table table){
+		Piece piece;
+		if(turn %2 == 0)
+			piece = table.blinkCell(new Position(0,0));
+		else
+			piece = table.blinkCell(new Position(0,0));
+		ArrayList<Position> positions = piece.getAllowedCells(table);
+		table.printSpecial(positions);
+	}
 
 }

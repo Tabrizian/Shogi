@@ -1,5 +1,7 @@
 package game.pieces;
 
+import java.util.ArrayList;
+
 import game.Piece;
 import game.Position;
 import game.Table;
@@ -11,7 +13,7 @@ public class Lance extends Piece {
 	public Lance(Table table) {
 		Position defaultPos = getDefaultPos();
 		setPos(defaultPos);
-		table.setTableCell(defaultPos, 'L');
+		table.setTableCell(defaultPos, this);
 		population++;
 	}
 
@@ -33,9 +35,14 @@ public class Lance extends Piece {
 	}
 
 	@Override
-	public boolean isAllowdMoving(Position dst) {
+	public String toString() {
+		return "L";
+	}
+
+	@Override
+	public ArrayList<Position> getAllowedCells(Table table) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }

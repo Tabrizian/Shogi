@@ -58,7 +58,7 @@ public class Position {
 	public Position getNextPos(Direction direction){
 		Position pos = new Position(this);
 		if(direction == Direction.NORTH){
-			pos.increseX();
+			pos.increseY();
 		}
 		else if(direction == Direction.NORTH_EAST){
 			pos.increseX();

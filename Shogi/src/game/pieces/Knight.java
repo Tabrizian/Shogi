@@ -1,4 +1,6 @@
 package game.pieces;
+import java.util.ArrayList;
+
 import game.Piece;
 import game.Position;
 import game.Table;
@@ -11,7 +13,7 @@ public class Knight extends Piece {
 	public Knight(Table table){
 		Position defaultPos = getDefaultPos();
 		setPos(defaultPos);
-		table.setTableCell(defaultPos, 'N');
+		table.setTableCell(defaultPos, this);
 		population++;
 	}
 	
@@ -33,10 +35,16 @@ public class Knight extends Piece {
 			return (new Position(7,8));
 		}
 
+	
 	@Override
-	public boolean isAllowdMoving(Position dst) {
+	public String toString() {
+		return "N";
+	}
+
+	@Override
+	public ArrayList<Position> getAllowedCells(Table table) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }

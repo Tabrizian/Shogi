@@ -9,7 +9,7 @@ public class MyKeyListener implements KeyListener {
 	Table table;
 	boolean pressedEnter = false;
 
-	public MyKeyListener(Position pos,Table table) {
+	public MyKeyListener(Position pos, Table table) {
 		this.pos = pos;
 		this.table = table;
 	}
@@ -17,7 +17,10 @@ public class MyKeyListener implements KeyListener {
 	public void keyPressed(KeyEvent arg0) {
 		System.out.printf("%c[%d;%df", 0x1B, 9 + 1 - pos.getY(),
 				pos.getX() * 2 + 1);
-		System.out.print(table.getTableCell(pos));
+		if (table.getTableCell(pos) != null)
+			System.out.print(table.getTableCell(pos));
+		else
+			System.out.print("-");
 		switch (arg0.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			if (!pressed)
@@ -55,7 +58,7 @@ public class MyKeyListener implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 	}
-	
+
 	public boolean isPressedEnter() {
 		return pressedEnter;
 	}

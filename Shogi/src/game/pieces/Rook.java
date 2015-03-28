@@ -1,4 +1,6 @@
 package game.pieces;
+import java.util.ArrayList;
+
 import game.Piece;
 import game.Position;
 import game.Table;
@@ -10,7 +12,7 @@ public class Rook extends Piece {
 	public Rook(Table table) {
 		Position defaultPos = getDefaultPos();
 		setPos(defaultPos);
-		table.setTableCell(defaultPos, 'R');
+		table.setTableCell(defaultPos, this);
 		population++;
 	}
 
@@ -26,11 +28,15 @@ public class Rook extends Piece {
 		else
 			return (new Position(1, 7));
 	}
-
+	
 	@Override
-	public boolean isAllowdMoving(Position dst) {
-		// TODO Auto-generated method stub
-		return false;
+	public String toString() {
+		return "R";
 	}
 
+	@Override
+	public ArrayList<Position> getAllowedCells(Table table) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

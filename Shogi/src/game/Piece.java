@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 public abstract class Piece {
 
 	private Position pos;
@@ -15,6 +17,5 @@ public abstract class Piece {
 	}
 	
 	protected abstract Position getDefaultPos();
-	
-	public abstract boolean isAllowdMoving(Position dst);
+	public abstract ArrayList<Position> getAllowedCells(Table table);
 }

@@ -1,5 +1,7 @@
 package game.pieces;
 
+import java.util.ArrayList;
+
 import game.Piece;
 import game.Position;
 import game.Table;
@@ -11,7 +13,7 @@ public class Bishop extends Piece {
 	public Bishop(Table table) {
 		Position defaultPos = getDefaultPos();
 		setPos(defaultPos);
-		table.setTableCell(defaultPos, 'B');
+		table.setTableCell(defaultPos, this);
 		population++;
 	}
 
@@ -28,11 +30,15 @@ public class Bishop extends Piece {
 		else
 			return (new Position(7, 7));
 	}
-
+	
 	@Override
-	public boolean isAllowdMoving(Position dst) {
-		// TODO Auto-generated method stub
-		return false;
+	public String toString() {
+		return "B";
 	}
 
+	@Override
+	public ArrayList<Position> getAllowedCells(Table table) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
