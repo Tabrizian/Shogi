@@ -1,7 +1,13 @@
 package game;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+
 public class Table {
 	private char[][] table;
+	private JFrame jFrame;
 
 	public Table() {
 		table = new char[9][9];
@@ -10,6 +16,7 @@ public class Table {
 				table[i][j] = '-';
 			}
 		}
+		jFrame = new JFrame();
 	}
 
 	public void setTableCell(Position pos, char type) {
@@ -29,4 +36,35 @@ public class Table {
 		}
 	}
 
+	public void blinkCell(Position pos) {
+		KeyListener listener = new MyKeyListener(pos,this);
+		while (true) {
+			boolean pressed = false;
+			jFrame.setVisible(true);
+			jFrame.requestFocus();
+			jFrame.addKeyListener(listener);
+			System.out.printf("%c[%d;%df", 0x1B, table.length + 1 - pos.getY(),
+					pos.getX() * 2 + 1);
+			System.out.print(" ");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.printf("%c[%d;%df", 0x1B, table.length + 1 - pos.getY(),
+					pos.getX() * 2 + 1);
+			System.out.print(getTableCell(pos));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(((MyKeyListener)listener).isPressedEnter()){
+				System.out.printf("%c[2J",0x1B);
+				break;
+			}
+		}
+	}
 }
