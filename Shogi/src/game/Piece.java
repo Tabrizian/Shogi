@@ -17,5 +17,6 @@ public abstract class Piece {
 	}
 	
 	protected abstract Position getDefaultPos();
-	public abstract ArrayList<Position> getAllowedCells(Table table);
+
+	public abstract ArrayList<Position> getAllowedCells(Table table, int playerId);
 }

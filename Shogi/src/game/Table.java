@@ -42,7 +42,6 @@ public class Table {
 	public Piece blinkCell(Position pos) {
 		KeyListener listener = new MyKeyListener(pos, this);
 		while (true) {
-			boolean pressed = false;
 			jFrame.setVisible(true);
 			jFrame.requestFocus();
 			jFrame.addKeyListener(listener);
@@ -71,6 +70,7 @@ public class Table {
 				break;
 			}
 		}
+		jFrame.setVisible(false);
 		return table[pos.getY()][pos.getX()];
 	}
 
@@ -91,5 +91,6 @@ public class Table {
 			else
 				System.out.printf("%c[%dm%s", 0x1B, 31, getTableCell(poses.get(i)));
 		}
+		System.out.printf("%c[%dm", 0x1B, 37);
 	}
 }

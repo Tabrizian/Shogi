@@ -38,7 +38,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Table table) {
+	public ArrayList<Position> getAllowedCells(Table table,int playerId) {
 		ArrayList<Position> positions = new ArrayList<>();
 		for (int i = 0; i < 8; i++) {
 			Position currentPos = this.getPos().getNextPos(Direction.values()[i]);
@@ -52,4 +52,5 @@ public class King extends Piece {
 		}
 		return positions;
 	}
+
 }

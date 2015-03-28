@@ -2,6 +2,7 @@ package game.pieces;
 
 import java.util.ArrayList;
 
+import game.Direction;
 import game.Piece;
 import game.Position;
 import game.Table;
@@ -37,8 +38,36 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Table table) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Position> getAllowedCells(Table table,int playerId) {
+		ArrayList<Position> positions = new ArrayList<>();
+		try {
+			for (Position current = this.getPos().getNextPos(Direction.NORTH_EAST); table
+					.isEmpty(current); current = current.getNextPos(Direction.NORTH_EAST)) {
+				positions.add(current);
+			}
+		} catch (Exception e) {
+		}
+		try {
+			for (Position current = this.getPos().getNextPos(Direction.NORTH_WEST); table
+					.isEmpty(current); current = current.getNextPos(Direction.NORTH_WEST)) {
+				positions.add(current);
+			}
+		} catch (Exception e) {
+		}
+		try {
+			for (Position current = this.getPos().getNextPos(Direction.SOUTH_EAST); table
+					.isEmpty(current); current = current.getNextPos(Direction.SOUTH_EAST)) {
+				positions.add(current);
+			}
+		} catch (Exception e) {
+		}
+		try {
+			for (Position current = this.getPos().getNextPos(Direction.SOUTH_WEST); table
+					.isEmpty(current); current = current.getNextPos(Direction.SOUTH_WEST)) {
+				positions.add(current);
+			}
+		} catch (Exception e) {
+		}
+		return positions;
 	}
 }

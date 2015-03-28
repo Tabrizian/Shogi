@@ -2,8 +2,6 @@ package game;
 
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 public class Game {
 	private Player player1;
 	private Player player2;
@@ -13,8 +11,8 @@ public class Game {
 
 	public Game() {
 		table = new Table();
-		player1 = new Player(table);
-		player2 = new Player(table);
+		player1 = new Player(table,1);
+		player2 = new Player(table,2);
 		komadi = new ArrayList<>();
 		turn = 0;
 
@@ -33,10 +31,10 @@ public class Game {
 	}
 
 	public void doTurn() {
-		turn++;
 		if (turn % 2 == 0)
 			player1.move(turn, table);
 		else
 			player2.move(turn, table);
+		turn++;
 	}
 }
