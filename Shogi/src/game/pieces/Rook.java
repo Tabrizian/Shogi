@@ -19,8 +19,8 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
+	public void move(Position pos, Table table) {
+		table.swapTableCells(pos, this.getPos());
 	}
 
 	@Override
@@ -49,21 +49,21 @@ public class Rook extends Piece {
 		try {
 			for (Position current = this.getPos().getNextPos(Direction.WEST); table
 					.isEmpty(current); current = current.getNextPos(Direction.WEST)) {
-				positions.add(current);
+				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
 			for (Position current = this.getPos().getNextPos(Direction.NORTH); table
 					.isEmpty(current); current = current.getNextPos(Direction.NORTH)) {
-				positions.add(current);
+				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
 			for (Position current = this.getPos().getNextPos(Direction.SOUTH); table
 					.isEmpty(current); current = current.getNextPos(Direction.SOUTH)) {
-				positions.add(current);
+				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}

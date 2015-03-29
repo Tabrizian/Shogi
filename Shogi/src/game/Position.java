@@ -9,11 +9,12 @@ public class Position {
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
-	
-	public Position(Position position){
+
+	public Position(Position position) {
 		this.xPos = position.xPos;
 		this.yPos = position.yPos;
 	}
+
 	public int getX() {
 		return xPos;
 	}
@@ -29,64 +30,62 @@ public class Position {
 	public void setY(int yPos) {
 		this.yPos = yPos;
 	}
-	
+
 	@Override
 	public boolean equals(Object pos) {
-		Position newPos = (Position) pos;
-		if(newPos.xPos == this.xPos && newPos.yPos==this.yPos){
-			return true;
+		if (pos instanceof Position) {
+			Position newPos = (Position) pos;
+			if (newPos.xPos == this.xPos && newPos.yPos == this.yPos) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
 		}
-		return false;
 	}
-	
-	public void increseX(){
+
+	public void increseX() {
 		xPos++;
 	}
-	
-	public void increseY(){
+
+	public void increseY() {
 		yPos++;
 	}
-	
-	public void decreseX(){
+
+	public void decreseX() {
 		xPos--;
 	}
-	
-	public void decreseY(){
+
+	public void decreseY() {
 		yPos--;
 	}
-	
-	public Position getNextPos(Direction direction){
+
+	public Position getNextPos(Direction direction) {
 		Position pos = new Position(this);
-		if(direction == Direction.NORTH){
+		if (direction == Direction.NORTH) {
 			pos.increseY();
-		}
-		else if(direction == Direction.NORTH_EAST){
+		} else if (direction == Direction.NORTH_EAST) {
 			pos.increseX();
 			pos.increseY();
-		}
-		else if(direction == Direction.EAST){
+		} else if (direction == Direction.EAST) {
 			pos.increseX();
-		}
-		else if(direction == Direction.SOUTH_EAST){
+		} else if (direction == Direction.SOUTH_EAST) {
 			pos.increseX();
 			pos.decreseY();
-		}
-		else if(direction == Direction.SOUTH){
+		} else if (direction == Direction.SOUTH) {
 			pos.decreseY();
-		}
-		else if(direction == Direction.SOUTH_WEST){
+		} else if (direction == Direction.SOUTH_WEST) {
 			pos.decreseY();
 			pos.decreseX();
-		}
-		else if(direction == Direction.WEST){
+		} else if (direction == Direction.WEST) {
 			pos.decreseX();
-		}
-		else if(direction == Direction.NORTH_WEST){
+		} else if (direction == Direction.NORTH_WEST) {
 			pos.decreseX();
 			pos.increseY();
 		}
-		
+
 		return pos;
 	}
-	
+
 }

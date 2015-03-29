@@ -19,9 +19,8 @@ public class GoldGeneral extends Piece {
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-
+	public void move(Position pos, Table table) {
+		table.swapTableCells(pos, this.getPos());
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class GoldGeneral extends Piece {
 							Direction.values()[i]);
 					try {
 						if (table.isEmpty(currentPos)) {
-							positions.add(currentPos);
+							positions.add(new Position(currentPos));
 						}
 					} catch (Exception e) {
 					}
@@ -67,7 +66,7 @@ public class GoldGeneral extends Piece {
 							Direction.values()[i]);
 					try {
 						if (table.isEmpty(currentPos)) {
-							positions.add(currentPos);
+							positions.add(new Position(currentPos));
 						}
 					} catch (Exception e) {
 					}

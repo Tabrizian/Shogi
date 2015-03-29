@@ -2,10 +2,12 @@ package game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class MyKeyListener implements KeyListener {
 	boolean pressed = false;
 	Position pos;
+	ArrayList<Position> positions;
 	Table table;
 	boolean pressedEnter = false;
 
@@ -14,13 +16,21 @@ public class MyKeyListener implements KeyListener {
 		this.table = table;
 	}
 
+	public MyKeyListener(Position pos, Table table, ArrayList<Position> poses) {
+		this.pos = pos;
+		this.table = table;
+		positions = new ArrayList<>(poses);
+	}
+
 	public void keyPressed(KeyEvent arg0) {
-		System.out.printf("%c[%d;%df", 0x1B, 9 + 1 - pos.getY(),
-				pos.getX() * 2 + 1);
-		if (table.getTableCell(pos) != null)
-			System.out.print(table.getTableCell(pos));
-		else
-			System.out.print("-");
+
+		if (positions != null && positions.size() > 0
+				&& positions.contains(pos))
+			Print.printSpecial(pos,Print.RED,table);
+		else {
+			Print.printAtPosition(pos);
+			Print.printSimply(table.getTableCell(pos).toString());
+		}
 		switch (arg0.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			if (!pressed)
@@ -48,6 +58,12 @@ public class MyKeyListener implements KeyListener {
 		default:
 			break;
 		}
+		pos.setX(pos.getX() % 9);
+		pos.setY(pos.getY() % 9);
+		if (pos.getX() < 0)
+			pos.setX(9 + pos.getX());
+		if (pos.getY() < 0)
+			pos.setY(9 + pos.getY());
 	}
 
 	@Override

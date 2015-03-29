@@ -19,13 +19,12 @@ public class Game {
 	}
 
 	public void showGame() {
-		System.out.printf("%c[2J", 0x1B);
+		Print.clearScreen();
 		if (turn % 2 == 0) {
-			System.out.println("Player 1 turn:");
+			Print.printLine("Player 1 turn:");
 			table.print();
-			doTurn();
 		} else {
-			System.out.println("Player 2 turn:");
+			Print.printLine("Player 2 turn:");
 			table.print();
 		}
 	}
@@ -36,5 +35,12 @@ public class Game {
 		else
 			player2.move(turn, table);
 		turn++;
+	}
+	
+	public void run(){
+		while(true){
+			showGame();
+			doTurn();
+		}
 	}
 }

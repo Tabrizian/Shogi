@@ -19,9 +19,8 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-
+	public void move(Position pos, Table table) {
+		table.swapTableCells(pos, this.getPos());
 	}
 
 	@Override
@@ -50,14 +49,14 @@ public class Knight extends Piece {
 			try {
 				current = this.getPos().getNextPos(Direction.NORTH_EAST).getNextPos(Direction.NORTH);
 				if(table.isEmpty(current)){
-					positions.add(current);
+					positions.add(new Position(current));
 				}
 			} catch (Exception e) {
 			}
 			try {
 				current = this.getPos().getNextPos(Direction.NORTH_WEST).getNextPos(Direction.NORTH);
 				if(table.isEmpty(current)){
-					positions.add(current);
+					positions.add(new Position(current));
 				}
 			} catch (Exception e) {
 			}
@@ -66,14 +65,14 @@ public class Knight extends Piece {
 			try {
 				current = this.getPos().getNextPos(Direction.SOUTH_EAST).getNextPos(Direction.SOUTH);
 				if(table.isEmpty(current)){
-					positions.add(current);
+					positions.add(new Position(current));
 				}
 			} catch (Exception e) {
 			}
 			try {
 				current = this.getPos().getNextPos(Direction.SOUTH_WEST).getNextPos(Direction.SOUTH);
 				if(table.isEmpty(current)){
-					positions.add(current);
+					positions.add(new Position(current));
 				}
 			} catch (Exception e) {
 			}

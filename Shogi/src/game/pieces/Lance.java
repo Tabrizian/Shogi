@@ -19,8 +19,8 @@ public class Lance extends Piece {
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
+	public void move(Position pos, Table table) {
+		table.swapTableCells(pos, this.getPos());
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class Lance extends Piece {
 
 			try {
 				if (table.isEmpty(currentPos)) {
-					positions.add(currentPos);
+					positions.add(new Position(currentPos));
 				}
 			} catch (Exception e) {
 			}

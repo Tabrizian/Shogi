@@ -6,7 +6,7 @@ public abstract class Piece {
 
 	private Position pos;
 
-	public abstract void move();
+	public abstract void move(Position pos,Table table);
 
 	public Position getPos() {
 		return pos;

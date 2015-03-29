@@ -19,11 +19,10 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-
+	public void move(Position pos, Table table) {
+		table.swapTableCells(pos, this.getPos());
 	}
-
+	
 	@Override
 	protected Position getDefaultPos() {
 		if (population == 0)
@@ -43,28 +42,28 @@ public class Bishop extends Piece {
 		try {
 			for (Position current = this.getPos().getNextPos(Direction.NORTH_EAST); table
 					.isEmpty(current); current = current.getNextPos(Direction.NORTH_EAST)) {
-				positions.add(current);
+				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
 			for (Position current = this.getPos().getNextPos(Direction.NORTH_WEST); table
 					.isEmpty(current); current = current.getNextPos(Direction.NORTH_WEST)) {
-				positions.add(current);
+				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
 			for (Position current = this.getPos().getNextPos(Direction.SOUTH_EAST); table
 					.isEmpty(current); current = current.getNextPos(Direction.SOUTH_EAST)) {
-				positions.add(current);
+				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
 			for (Position current = this.getPos().getNextPos(Direction.SOUTH_WEST); table
 					.isEmpty(current); current = current.getNextPos(Direction.SOUTH_WEST)) {
-				positions.add(current);
+				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}

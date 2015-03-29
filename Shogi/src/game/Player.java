@@ -51,18 +51,21 @@ public class Player {
 			if (pieces.contains(piece)) {
 				positions = piece.getAllowedCells(table, playerId);
 				if (positions.size() > 0) {
-					table.printSpecial(positions);
-					movingPiece = table.blinkCell(positions.get(0));
-					if(positions.contains(movingPiece.getPos())){
-						movingPiece.move();
+					Print.printSpecial(positions, Print.RED, table);
+					movingPiece = table.blinkCell(
+							new Position(positions.get(0)), positions);
+					if (positions.contains(movingPiece.getPos())) {
+						piece.move(movingPiece.getPos(), table);
 					}
+
+					while (positions.size() != 0)
+						positions.remove(0);
 				} else {
-					System.out.printf("%c[%d;%df", 0x1B, 11, 0);
-					System.out.println("There is no where to go from here!");
+					Print.printMessege("There is no where to go from here!");
 				}
+				movingPiece = null;
 			} else {
-				System.out.printf("%c[%d;%df", 0x1B, 11, 0);
-				System.out.println("This is not you're piece!");
+				Print.printMessege("This is not you're piece!");
 			}
 
 		} else {
@@ -70,18 +73,21 @@ public class Player {
 			if (pieces.contains(piece)) {
 				positions = piece.getAllowedCells(table, playerId);
 				if (positions.size() > 0) {
-					table.printSpecial(positions);
-					movingPiece = table.blinkCell(positions.get(0));
-					if(positions.contains(movingPiece.getPos())){
-						movingPiece.move();
+					Print.printSpecial((positions), Print.RED, table);
+					movingPiece = table.blinkCell(
+							new Position(positions.get(0)), positions);
+					if (positions.contains(movingPiece.getPos())) {
+						piece.move(movingPiece.getPos(), table);
 					}
+					movingPiece = null;
+
+					while (positions.size() != 0)
+						positions.remove(0);
 				} else {
-					System.out.printf("%c[%d;%df", 0x1B, 11, 0);
-					System.out.println("There is no where to go from here!");
+					Print.printMessege("There is no where to go from here!");
 				}
 			} else {
-				System.out.printf("%c[%d;%df", 0x1B, 11, 0);
-				System.out.println("This is not you're piece!");
+				Print.printMessege("This is not you're piece!");
 			}
 		}
 

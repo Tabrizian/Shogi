@@ -1,5 +1,7 @@
 package game;
 
+import game.pieces.None;
+
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
@@ -8,12 +10,12 @@ import javax.swing.JFrame;
 public class Table {
 	private Piece[][] table;
 	private JFrame jFrame;
-
+	private static final int sleepTime= 250;
 	public Table() {
 		table = new Piece[9][9];
 		for (int i = 0; i < table.length; i++) {
 			for (int j = 0; j < table[0].length; j++) {
-				table[i][j] = null;
+				table[i][j] = new None(this, new Position(j, i));
 			}
 		}
 		jFrame = new JFrame();
@@ -27,15 +29,21 @@ public class Table {
 		return table[pos.getY()][pos.getX()];
 	}
 
+	public void swapTableCells(Position pos1, Position pos2) {
+		Piece temp;
+		temp = getTableCell(pos1);
+		setTableCell(pos1, getTableCell(pos2));
+		setTableCell(pos2, temp);
+		getTableCell(pos1).setPos(pos1);
+		getTableCell(pos2).setPos(pos2);
+	}
+
 	public void print() {
-		for (int i = 0; i < table.length; i++) {
-			for (int j = 8; j >= 0; j--) {
-				if (table[i][j] == null) {
-					System.out.print("-" + " ");
-				} else
-					System.out.print(table[i][j] + " ");
+		for (int i = 8; i >= 0; i--) {
+			for (int j = 0; j < table.length; j++) {
+				Print.printSimply((table[i][j].toString() + " "));
 			}
-			System.out.println();
+			Print.printLine("");
 		}
 	}
 
@@ -45,23 +53,18 @@ public class Table {
 			jFrame.setVisible(true);
 			jFrame.requestFocus();
 			jFrame.addKeyListener(listener);
-			System.out.printf("%c[%d;%df", 0x1B, table.length + 1 - pos.getY(),
-					pos.getX() * 2 + 1);
-			System.out.print(" ");
+			Print.printAtPosition(pos);
+			Print.printSimply(" ");
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.printf("%c[%d;%df", 0x1B, table.length + 1 - pos.getY(),
-					pos.getX() * 2 + 1);
-			if (getTableCell(pos) == null) {
-				System.out.print('-');
-			} else
-				System.out.print(getTableCell(pos));
+			Print.printAtPosition(pos);
+			Print.printSimply(getTableCell(pos).toString());
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,27 +73,48 @@ public class Table {
 				break;
 			}
 		}
-		jFrame.setVisible(false);
+		return table[pos.getY()][pos.getX()];
+	}
+
+	public Piece blinkCell(Position pos, ArrayList<Position> specialPoses) {
+		KeyListener listener = new MyKeyListener(pos, this, specialPoses);
+		
+		while (true) {
+			jFrame.setVisible(true);
+			jFrame.requestFocus();
+			jFrame.addKeyListener(listener);
+			Print.printAtPosition(pos);
+			Print.printSimply(" ");
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (!specialPoses.contains(pos)) {
+				Print.printAtPosition(pos);
+				Print.printSimply(getTableCell(pos).toString());
+			} else {
+				Print.printSpecial(pos,Print.RED,this);
+			}
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (((MyKeyListener) listener).isPressedEnter()) {
+				break;
+			}
+
+		}
 		return table[pos.getY()][pos.getX()];
 	}
 
 	public boolean isEmpty(Position pos) {
-		if (getTableCell(pos) == null)
+		if (getTableCell(pos) instanceof None)
 			return true;
 		else
 			return false;
-	}
-
-	public void printSpecial(ArrayList<Position> poses) {
-		for (int i = 0; i < poses.size(); i++) {
-			System.out.printf("%c[%d;%df", 0x1B, table.length + 1
-					- poses.get(i).getY(), poses.get(i).getX() * 2 + 1);
-			if (getTableCell(poses.get(i)) == null) {
-				System.out.printf("%c[%dm%s", 0x1B, 31, "*");
-			}
-			else
-				System.out.printf("%c[%dm%s", 0x1B, 31, getTableCell(poses.get(i)));
-		}
-		System.out.printf("%c[%dm", 0x1B, 37);
 	}
 }
