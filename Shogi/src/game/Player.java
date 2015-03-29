@@ -92,7 +92,14 @@ public class Player {
 		}
 
 	}
-
+	
+	public void moveGUI(Table table,int turn){
+		Piece piece;
+		Piece movingPiece;
+		ArrayList<Position> positions;
+		
+	}
+	
 	public int getPlayerId() {
 		return playerId;
 	}

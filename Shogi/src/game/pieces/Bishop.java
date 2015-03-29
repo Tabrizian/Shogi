@@ -1,11 +1,13 @@
 package game.pieces;
 
-import java.util.ArrayList;
-
 import game.Direction;
 import game.Piece;
 import game.Position;
 import game.Table;
+
+import java.util.ArrayList;
+
+import javax.swing.JButton;
 
 public class Bishop extends Piece {
 

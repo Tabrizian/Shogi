@@ -2,6 +2,8 @@ package game.pieces;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+
 import game.Direction;
 import game.Piece;
 import game.Position;

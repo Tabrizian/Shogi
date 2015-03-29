@@ -7,6 +7,8 @@ import game.Table;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+
 public class King extends Piece {
 
 	private static int population = 0;
