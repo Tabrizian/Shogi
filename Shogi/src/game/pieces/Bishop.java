@@ -42,7 +42,8 @@ public class Bishop extends Piece {
 	public ArrayList<Position> getAllowedCells(Table table,int playerId) {
 		ArrayList<Position> positions = new ArrayList<>();
 		try {
-			for (Position current = this.getPos().getNextPos(Direction.NORTH_EAST); table
+			Position current;
+			for (current = this.getPos().getNextPos(Direction.NORTH_EAST); table
 					.isEmpty(current); current = current.getNextPos(Direction.NORTH_EAST)) {
 				positions.add(new Position(current));
 			}

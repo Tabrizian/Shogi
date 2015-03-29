@@ -15,6 +15,7 @@ public class MyActionListener implements ActionListener {
 	private static int turn;
 	private Table table;
 	private ArrayList<Piece> pieces;
+
 	public MyActionListener(Player player1, Player player2, int turn,
 			Table table, Position pos) {
 		this.player2 = player2;
@@ -27,11 +28,11 @@ public class MyActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (turn % 2 == 0) {
-			if (table.getButton(pos).getBackground() != Color.BLUE) {
+			if (table.getButton(pos).getBackground() != Color.BLUE && table.getButton(pos).getBackground() != (Color.ORANGE)) {
 				ArrayList<Position> positions;
 				Piece piece = table.getTableCell(pos);
 				pieces = player1.getPieces();
-				
+
 				if (pieces.contains(piece)) {
 					positions = piece.getAllowedCells(table,
 							player1.getPlayerId());
@@ -43,10 +44,24 @@ public class MyActionListener implements ActionListener {
 						}
 					}
 				}
+			} else if (table.getButton(pos).getBackground() == (Color.ORANGE)) {
+
+				Piece piece = table.getTableCell(table.findPressedButton());
+
+				table.getButton(piece.getPos()).setBackground(
+						Table.ORIGINAL_COLOR);
+				ArrayList<Position> positions;
+				positions = piece.getAllowedCells(table, player1.getPlayerId());
+				if (positions.size() > 0) {
+					for (int i = 0; i < positions.size(); i++) {
+						table.getButton(positions.get(i)).setBackground(
+								Table.ORIGINAL_COLOR);
+					}
+				}
 			} else {
 				Piece movingPiece = table.getTableCell(pos);
 				Piece piece = table.getTableCell(table.findPressedButton());
-				
+
 				table.getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
@@ -61,7 +76,7 @@ public class MyActionListener implements ActionListener {
 				turn++;
 			}
 		} else {
-			if (table.getButton(pos).getBackground() != Color.BLUE) {
+			if (table.getButton(pos).getBackground() != Color.BLUE &&table.getButton(pos).getBackground() != (Color.ORANGE)) {
 				ArrayList<Position> positions;
 				Piece piece = table.getTableCell(pos);
 				pieces = player2.getPieces();
@@ -76,10 +91,25 @@ public class MyActionListener implements ActionListener {
 						}
 					}
 				}
+			} else if (table.getButton(pos).getBackground() == (Color.ORANGE)) {
+
+				Piece piece = table.getTableCell(table.findPressedButton());
+
+				table.getButton(piece.getPos()).setBackground(
+						Table.ORIGINAL_COLOR);
+				ArrayList<Position> positions;
+				positions = piece.getAllowedCells(table, player1.getPlayerId());
+				if (positions.size() > 0) {
+					for (int i = 0; i < positions.size(); i++) {
+						table.getButton(positions.get(i)).setBackground(
+								Table.ORIGINAL_COLOR);
+					}
+				}
+
 			} else {
 				Piece movingPiece = table.getTableCell(pos);
 				Piece piece = table.getTableCell(table.findPressedButton());
-				
+
 				table.getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
