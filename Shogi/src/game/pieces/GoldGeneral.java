@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 import game.Direction;
+import game.Game;
 import game.Piece;
+import game.Player;
 import game.Position;
 import game.Table;
 
@@ -43,15 +45,15 @@ public class GoldGeneral extends Piece {
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Table table, int playerId) {
-		if (playerId == 1) {
+	public ArrayList<Position> getAllowedCells(Game game,Player player) {
+		if (player.getPlayerId() == 1) {
 			ArrayList<Position> positions = new ArrayList<>();
 			for (int i = 0; i < 8; i++) {
 				if (i != 3 && i != 5) {
 					Position currentPos = this.getPos().getNextPos(
 							Direction.values()[i]);
 					try {
-						if (table.isEmpty(currentPos)) {
+						if (game.getTable().isEmpty(currentPos)) {
 							positions.add(new Position(currentPos));
 						}
 					} catch (Exception e) {
@@ -67,7 +69,7 @@ public class GoldGeneral extends Piece {
 					Position currentPos = this.getPos().getNextPos(
 							Direction.values()[i]);
 					try {
-						if (table.isEmpty(currentPos)) {
+						if (game.getTable().isEmpty(currentPos)) {
 							positions.add(new Position(currentPos));
 						}
 					} catch (Exception e) {

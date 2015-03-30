@@ -1,13 +1,13 @@
 package game.pieces;
 
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-
 import game.Direction;
+import game.Game;
 import game.Piece;
+import game.Player;
 import game.Position;
 import game.Table;
+
+import java.util.ArrayList;
 
 public class Knight extends Piece {
 
@@ -43,21 +43,21 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Table table, int playerId) {
+	public ArrayList<Position> getAllowedCells(Game game,Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (playerId == 1) {
+		if (player.getPlayerId() == 1) {
 			
 			Position current;
 			try {
 				current = this.getPos().getNextPos(Direction.NORTH_EAST).getNextPos(Direction.NORTH);
-				if(table.isEmpty(current)){
+				if(game.getTable().isEmpty(current)){
 					positions.add(new Position(current));
 				}
 			} catch (Exception e) {
 			}
 			try {
 				current = this.getPos().getNextPos(Direction.NORTH_WEST).getNextPos(Direction.NORTH);
-				if(table.isEmpty(current)){
+				if(game.getTable().isEmpty(current)){
 					positions.add(new Position(current));
 				}
 			} catch (Exception e) {
@@ -66,14 +66,14 @@ public class Knight extends Piece {
 			Position current;
 			try {
 				current = this.getPos().getNextPos(Direction.SOUTH_EAST).getNextPos(Direction.SOUTH);
-				if(table.isEmpty(current)){
+				if(game.getTable().isEmpty(current)){
 					positions.add(new Position(current));
 				}
 			} catch (Exception e) {
 			}
 			try {
 				current = this.getPos().getNextPos(Direction.SOUTH_WEST).getNextPos(Direction.SOUTH);
-				if(table.isEmpty(current)){
+				if(game.getTable().isEmpty(current)){
 					positions.add(new Position(current));
 				}
 			} catch (Exception e) {

@@ -1,13 +1,13 @@
 package game.pieces;
 
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-
 import game.Direction;
+import game.Game;
 import game.Piece;
+import game.Player;
 import game.Position;
 import game.Table;
+
+import java.util.ArrayList;
 
 public class Pawn extends Piece {
 
@@ -40,14 +40,14 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Table table, int playerId) {
+	public ArrayList<Position> getAllowedCells(Game game,Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (playerId == 1) {
+		if (player.getPlayerId() == 1) {
 			Position currentPos = this.getPos().getNextPos(
 					Direction.values()[0]);
 
 			try {
-				if (table.isEmpty(currentPos)) {
+				if (game.getTable().isEmpty(currentPos)) {
 					positions.add(currentPos);
 				}
 			} catch (Exception e) {
@@ -58,7 +58,7 @@ public class Pawn extends Piece {
 					Direction.values()[4]);
 
 			try {
-				if (table.isEmpty(currentPos)) {
+				if (game.getTable().isEmpty(currentPos)) {
 					positions.add(new Position(currentPos));
 				}
 			} catch (Exception e) {

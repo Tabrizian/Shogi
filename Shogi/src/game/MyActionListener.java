@@ -15,14 +15,14 @@ public class MyActionListener implements ActionListener {
 	private static int turn;
 	private Table table;
 	private ArrayList<Piece> pieces;
-
-	public MyActionListener(Player player1, Player player2, int turn,
-			Table table, Position pos) {
-		this.player2 = player2;
-		this.player1 = player1;
-		MyActionListener.turn = turn;
+	private Game game;
+	public MyActionListener(Game game, Position pos) {
+		this.player2 = game.getPlayer1();
+		this.player1 = game.getPlayer2();
+		MyActionListener.turn = game.getTurn();
 		this.pos = pos;
-		this.table = table;
+		this.table = game.getTable();
+		this.game = game;
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -34,8 +34,8 @@ public class MyActionListener implements ActionListener {
 				pieces = player1.getPieces();
 
 				if (pieces.contains(piece)) {
-					positions = piece.getAllowedCells(table,
-							player1.getPlayerId());
+					positions = piece.getAllowedCells(game,
+							player1);
 					if (positions.size() > 0) {
 						table.getButton(pos).setBackground(Color.ORANGE);
 						for (int i = 0; i < positions.size(); i++) {
@@ -51,7 +51,7 @@ public class MyActionListener implements ActionListener {
 				table.getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
-				positions = piece.getAllowedCells(table, player1.getPlayerId());
+				positions = piece.getAllowedCells(game, player1);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
 						table.getButton(positions.get(i)).setBackground(
@@ -65,7 +65,7 @@ public class MyActionListener implements ActionListener {
 				table.getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
-				positions = piece.getAllowedCells(table, player1.getPlayerId());
+				positions = piece.getAllowedCells(game, player1);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
 						table.getButton(positions.get(i)).setBackground(
@@ -81,8 +81,7 @@ public class MyActionListener implements ActionListener {
 				Piece piece = table.getTableCell(pos);
 				pieces = player2.getPieces();
 				if (pieces.contains(piece)) {
-					positions = piece.getAllowedCells(table,
-							player2.getPlayerId());
+					positions = piece.getAllowedCells(game,player2);
 					if (positions.size() > 0) {
 						table.getButton(pos).setBackground(Color.ORANGE);
 						for (int i = 0; i < positions.size(); i++) {
@@ -98,7 +97,7 @@ public class MyActionListener implements ActionListener {
 				table.getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
-				positions = piece.getAllowedCells(table, player1.getPlayerId());
+				positions = piece.getAllowedCells(game, player1);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
 						table.getButton(positions.get(i)).setBackground(
@@ -113,7 +112,7 @@ public class MyActionListener implements ActionListener {
 				table.getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
-				positions = piece.getAllowedCells(table, player2.getPlayerId());
+				positions = piece.getAllowedCells(game, player2);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
 						table.getButton(positions.get(i)).setBackground(

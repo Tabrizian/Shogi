@@ -1,13 +1,13 @@
 package game.pieces;
 
 import game.Direction;
+import game.Game;
 import game.Piece;
+import game.Player;
 import game.Position;
 import game.Table;
 
 import java.util.ArrayList;
-
-import javax.swing.JButton;
 
 public class Bishop extends Piece {
 
@@ -39,32 +39,32 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Table table,int playerId) {
+	public ArrayList<Position> getAllowedCells(Game game,Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
 		try {
 			Position current;
-			for (current = this.getPos().getNextPos(Direction.NORTH_EAST); table
+			for (current = this.getPos().getNextPos(Direction.NORTH_EAST); game.getTable()
 					.isEmpty(current); current = current.getNextPos(Direction.NORTH_EAST)) {
 				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
-			for (Position current = this.getPos().getNextPos(Direction.NORTH_WEST); table
+			for (Position current = this.getPos().getNextPos(Direction.NORTH_WEST); game.getTable()
 					.isEmpty(current); current = current.getNextPos(Direction.NORTH_WEST)) {
 				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
-			for (Position current = this.getPos().getNextPos(Direction.SOUTH_EAST); table
+			for (Position current = this.getPos().getNextPos(Direction.SOUTH_EAST); game.getTable()
 					.isEmpty(current); current = current.getNextPos(Direction.SOUTH_EAST)) {
 				positions.add(new Position(current));
 			}
 		} catch (Exception e) {
 		}
 		try {
-			for (Position current = this.getPos().getNextPos(Direction.SOUTH_WEST); table
+			for (Position current = this.getPos().getNextPos(Direction.SOUTH_WEST); game.getTable()
 					.isEmpty(current); current = current.getNextPos(Direction.SOUTH_WEST)) {
 				positions.add(new Position(current));
 			}

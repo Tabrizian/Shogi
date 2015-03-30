@@ -1,12 +1,12 @@
 package game.pieces;
 
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-
+import game.Game;
 import game.Piece;
+import game.Player;
 import game.Position;
 import game.Table;
+
+import java.util.ArrayList;
 
 public class None extends Piece{
 	
@@ -27,7 +27,7 @@ public class None extends Piece{
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Table table, int playerId) {
+	public ArrayList<Position> getAllowedCells(Game game,Player player) {
 		// TODO Auto-generated method stub
 		return null;
 	}

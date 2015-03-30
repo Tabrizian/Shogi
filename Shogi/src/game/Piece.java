@@ -10,7 +10,7 @@ public abstract class Piece {
 	protected JButton button;
 	public abstract void move(Position pos,Table table);	
 	protected abstract Position getDefaultPos();
-	public abstract ArrayList<Position> getAllowedCells(Table table, int playerId);
+	public abstract ArrayList<Position> getAllowedCells(Game game,Player player);
 
 	public JButton getButton() {
 		return button;

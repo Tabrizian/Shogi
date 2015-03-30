@@ -12,10 +12,10 @@ import javax.swing.JFrame;
 
 public class Table extends JFrame {
 	private Piece[][] table;
-	private JFrame jFrame;
+//	private JFrame jFrame;
 	private JButton[][] buttons;
 	public static final Color ORIGINAL_COLOR = (new JButton()).getBackground();
-	private static final int sleepTime = 250;
+//	private static final int sleepTime = 250;
 	GridLayout gridLayout;
 
 	public Table() {
@@ -55,78 +55,78 @@ public class Table extends JFrame {
 		getButton(pos2).setText(getTableCell(pos2).toString());
 	}
 
-	public void print() {
-		for (int i = 8; i >= 0; i--) {
-			for (int j = 0; j < table.length; j++) {
-				Print.printSimply((table[i][j].toString() + " "));
-			}
-			Print.printLine("");
-		}
-	}
+//	public void print() {
+//		for (int i = 8; i >= 0; i--) {
+//			for (int j = 0; j < table.length; j++) {
+//				Print.printSimply((table[i][j].toString() + " "));
+//			}
+//			Print.printLine("");
+//		}
+//	}
 
-	public Piece blinkCell(Position pos) {
-		KeyListener listener = new MyKeyListener(pos, this);
-		while (true) {
-			jFrame.setVisible(true);
-			jFrame.requestFocus();
-			jFrame.addKeyListener(listener);
-			Print.printAtPosition(pos);
-			Print.printSimply(" ");
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Print.printAtPosition(pos);
-			Print.printSimply(getTableCell(pos).toString());
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (((MyKeyListener) listener).isPressedEnter()) {
-				break;
-			}
-		}
-		return table[pos.getY()][pos.getX()];
-	}
+//	public Piece blinkCell(Position pos) {
+//		KeyListener listener = new MyKeyListener(pos, this);
+//		while (true) {
+//			jFrame.setVisible(true);
+//			jFrame.requestFocus();
+//			jFrame.addKeyListener(listener);
+//			Print.printAtPosition(pos);
+//			Print.printSimply(" ");
+//			try {
+//				Thread.sleep(sleepTime);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			Print.printAtPosition(pos);
+//			Print.printSimply(getTableCell(pos).toString());
+//			try {
+//				Thread.sleep(sleepTime);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			if (((MyKeyListener) listener).isPressedEnter()) {
+//				break;
+//			}
+//		}
+//		return table[pos.getY()][pos.getX()];
+//	}
 
-	public Piece blinkCell(Position pos, ArrayList<Position> specialPoses) {
-		KeyListener listener = new MyKeyListener(pos, this, specialPoses);
-
-		while (true) {
-			jFrame.setVisible(true);
-			jFrame.requestFocus();
-			jFrame.addKeyListener(listener);
-			Print.printAtPosition(pos);
-			Print.printSimply(" ");
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (!specialPoses.contains(pos)) {
-				Print.printAtPosition(pos);
-				Print.printSimply(getTableCell(pos).toString());
-			} else {
-				Print.printSpecial(pos, Print.RED, this);
-			}
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (((MyKeyListener) listener).isPressedEnter()) {
-				break;
-			}
-
-		}
-		return table[pos.getY()][pos.getX()];
-	}
+//	public Piece blinkCell(Position pos, ArrayList<Position> specialPoses) {
+//		KeyListener listener = new MyKeyListener(pos, this, specialPoses);
+//
+//		while (true) {
+//			jFrame.setVisible(true);
+//			jFrame.requestFocus();
+//			jFrame.addKeyListener(listener);
+//			Print.printAtPosition(pos);
+//			Print.printSimply(" ");
+//			try {
+//				Thread.sleep(sleepTime);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			if (!specialPoses.contains(pos)) {
+//				Print.printAtPosition(pos);
+//				Print.printSimply(getTableCell(pos).toString());
+//			} else {
+//				Print.printSpecial(pos, Print.RED, this);
+//			}
+//			try {
+//				Thread.sleep(sleepTime);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			if (((MyKeyListener) listener).isPressedEnter()) {
+//				break;
+//			}
+//
+//		}
+//		return table[pos.getY()][pos.getX()];
+//	}
 
 	public boolean isEmpty(Position pos) {
 		if (getTableCell(pos) instanceof None)

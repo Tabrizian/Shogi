@@ -42,56 +42,56 @@ public class Player {
 		this.pieces = pieces;
 	}
 
-	public void move(int turn, Table table) {
-		Piece piece;
-		Piece movingPiece;
-		ArrayList<Position> positions;
-		if (turn % 2 == 0) {
-			piece = table.blinkCell(new Position(0, 0));
-			if (pieces.contains(piece)) {
-				positions = piece.getAllowedCells(table, playerId);
-				if (positions.size() > 0) {
-					Print.printSpecial(positions, Print.RED, table);
-					movingPiece = table.blinkCell(
-							new Position(positions.get(0)), positions);
-					if (positions.contains(movingPiece.getPos())) {
-						piece.move(movingPiece.getPos(), table);
-					}
-
-					while (positions.size() != 0)
-						positions.remove(0);
-				} else {
-					Print.printMessege("There is no where to go from here!");
-				}
-				movingPiece = null;
-			} else {
-				Print.printMessege("This is not you're piece!");
-			}
-
-		} else {
-			piece = table.blinkCell(new Position(8, 8));
-			if (pieces.contains(piece)) {
-				positions = piece.getAllowedCells(table, playerId);
-				if (positions.size() > 0) {
-					Print.printSpecial((positions), Print.RED, table);
-					movingPiece = table.blinkCell(
-							new Position(positions.get(0)), positions);
-					if (positions.contains(movingPiece.getPos())) {
-						piece.move(movingPiece.getPos(), table);
-					}
-					movingPiece = null;
-
-					while (positions.size() != 0)
-						positions.remove(0);
-				} else {
-					Print.printMessege("There is no where to go from here!");
-				}
-			} else {
-				Print.printMessege("This is not you're piece!");
-			}
-		}
-
-	}
+//	public void move(int turn, Table table) {
+//		Piece piece;
+//		Piece movingPiece;
+//		ArrayList<Position> positions;
+//		if (turn % 2 == 0) {
+//			piece = table.blinkCell(new Position(0, 0));
+//			if (pieces.contains(piece)) {
+//				positions = piece.getAllowedCells(table, playerId);
+//				if (positions.size() > 0) {
+//					Print.printSpecial(positions, Print.RED, table);
+//					movingPiece = table.blinkCell(
+//							new Position(positions.get(0)), positions);
+//					if (positions.contains(movingPiece.getPos())) {
+//						piece.move(movingPiece.getPos(), table);
+//					}
+//
+//					while (positions.size() != 0)
+//						positions.remove(0);
+//				} else {
+//					Print.printMessege("There is no where to go from here!");
+//				}
+//				movingPiece = null;
+//			} else {
+//				Print.printMessege("This is not you're piece!");
+//			}
+//
+//		} else {
+//			piece = table.blinkCell(new Position(8, 8));
+//			if (pieces.contains(piece)) {
+//				positions = piece.getAllowedCells(table, playerId);
+//				if (positions.size() > 0) {
+//					Print.printSpecial((positions), Print.RED, table);
+//					movingPiece = table.blinkCell(
+//							new Position(positions.get(0)), positions);
+//					if (positions.contains(movingPiece.getPos())) {
+//						piece.move(movingPiece.getPos(), table);
+//					}
+//					movingPiece = null;
+//
+//					while (positions.size() != 0)
+//						positions.remove(0);
+//				} else {
+//					Print.printMessege("There is no where to go from here!");
+//				}
+//			} else {
+//				Print.printMessege("This is not you're piece!");
+//			}
+//		}
+//
+//	}
 	
 	public void moveGUI(Table table,int turn){
 		Piece piece;
