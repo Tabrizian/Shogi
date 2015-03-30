@@ -1,15 +1,13 @@
 package game.pieces;
 
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-
 import game.Direction;
 import game.Game;
 import game.Piece;
 import game.Player;
 import game.Position;
 import game.Table;
+
+import java.util.ArrayList;
 
 public class Lance extends Piece {
 
@@ -23,8 +21,8 @@ public class Lance extends Piece {
 	}
 
 	@Override
-	public void move(Position pos, Table table) {
-		table.swapTableCells(pos, this.getPos());
+	public void move(Position pos, Table table,Game game) {
+		table.swapTableCells(pos, this.getPos(),game);
 	}
 
 	@Override
@@ -47,45 +45,29 @@ public class Lance extends Piece {
 	@Override
 	public ArrayList<Position> getAllowedCells(Game game,Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (player.getPlayerId() == 1) {
-			Position currentPos = this.getPos().getNextPos(
-					Direction.values()[0]);
-
-			try {
-				if (game.getTable().isEmpty(currentPos)) {
-					positions.add(currentPos);
-				}
-			} catch (Exception e) {
+		try {
+			Position current;
+			for (current = this.getPos().getNextPos(Direction.NORTH); game.getTable()
+					.isEmpty(current); current = current.getNextPos(Direction.NORTH)) {
+				positions.add(new Position(current));
 			}
-			currentPos = this.getPos().getNextPos(Direction.values()[0])
-					.getNextPos(Direction.values()[0]);
-
-			try {
-				if (game.getTable().isEmpty(currentPos)) {
-					positions.add(currentPos);
-				}
-			} catch (Exception e) {
+			if(!player.getPieces().contains(game.getTable().getTableCell(current))){
+				positions.add(current);
 			}
-		} else {
-			Position currentPos = this.getPos().getNextPos(
-					Direction.values()[4]);
-
-			try {
-				if (game.getTable().isEmpty(currentPos)) {
-					positions.add(currentPos);
-				}
-			} catch (Exception e) {
-			}
-			currentPos = this.getPos().getNextPos(Direction.values()[4])
-					.getNextPos(Direction.values()[4]);
-
-			try {
-				if (game.getTable().isEmpty(currentPos)) {
-					positions.add(new Position(currentPos));
-				}
-			} catch (Exception e) {
-			}
+		} catch (Exception e) {
 		}
+		try {
+			Position current;
+			for (current = this.getPos().getNextPos(Direction.SOUTH); game.getTable()
+					.isEmpty(current); current = current.getNextPos(Direction.SOUTH)) {
+				positions.add(new Position(current));
+			}
+			if(!player.getPieces().contains(game.getTable().getTableCell(current))){
+				positions.add(current);
+			}
+		} catch (Exception e) {
+		}
+
 		return positions;
 	}
 

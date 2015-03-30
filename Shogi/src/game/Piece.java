@@ -8,7 +8,7 @@ public abstract class Piece {
 
 	private Position pos;
 	protected JButton button;
-	public abstract void move(Position pos,Table table);	
+	public abstract void move(Position pos,Table table,Game game);	
 	protected abstract Position getDefaultPos();
 	public abstract ArrayList<Position> getAllowedCells(Game game,Player player);
 

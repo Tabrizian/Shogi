@@ -21,8 +21,8 @@ public class King extends Piece {
 	}
 
 	@Override
-	public void move(Position pos, Table table) {
-		table.swapTableCells(pos, this.getPos());
+	public void move(Position pos, Table table,Game game) {
+		table.swapTableCells(pos, this.getPos(),game);
 	}
 
 	@Override
@@ -46,8 +46,15 @@ public class King extends Piece {
 					Direction.values()[i]);
 
 			try {
-				if (game.getTable().isEmpty(currentPos)) {
-					positions.add(new Position(currentPos));
+				if (player == game.getPlayer1()) {
+					if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+						positions.add(new Position(currentPos));
+					}
+				}
+				if (player == game.getPlayer2()) {
+					if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+						positions.add(new Position(currentPos));
+					}
 				}
 			} catch (Exception e) {
 			}

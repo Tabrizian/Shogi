@@ -21,8 +21,8 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public void move(Position pos, Table table) {
-		table.swapTableCells(pos, this.getPos());
+	public void move(Position pos, Table table,Game game) {
+		table.swapTableCells(pos, this.getPos(),game);
 	}
 
 	@Override
@@ -50,15 +50,29 @@ public class Knight extends Piece {
 			Position current;
 			try {
 				current = this.getPos().getNextPos(Direction.NORTH_EAST).getNextPos(Direction.NORTH);
-				if(game.getTable().isEmpty(current)){
-					positions.add(new Position(current));
+				if (player == game.getPlayer1()) {
+					if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
+				}
+				if (player == game.getPlayer2()) {
+					if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
 				}
 			} catch (Exception e) {
 			}
 			try {
 				current = this.getPos().getNextPos(Direction.NORTH_WEST).getNextPos(Direction.NORTH);
-				if(game.getTable().isEmpty(current)){
-					positions.add(new Position(current));
+				if (player == game.getPlayer1()) {
+					if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
+				}
+				if (player == game.getPlayer2()) {
+					if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
 				}
 			} catch (Exception e) {
 			}
@@ -66,15 +80,29 @@ public class Knight extends Piece {
 			Position current;
 			try {
 				current = this.getPos().getNextPos(Direction.SOUTH_EAST).getNextPos(Direction.SOUTH);
-				if(game.getTable().isEmpty(current)){
-					positions.add(new Position(current));
+				if (player == game.getPlayer1()) {
+					if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
+				}
+				if (player == game.getPlayer2()) {
+					if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
 				}
 			} catch (Exception e) {
 			}
 			try {
 				current = this.getPos().getNextPos(Direction.SOUTH_WEST).getNextPos(Direction.SOUTH);
-				if(game.getTable().isEmpty(current)){
-					positions.add(new Position(current));
+				if (player == game.getPlayer1()) {
+					if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
+				}
+				if (player == game.getPlayer2()) {
+					if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(current))||game.getTable().isEmpty(current)) {
+						positions.add(new Position(current));
+					}
 				}
 			} catch (Exception e) {
 			}

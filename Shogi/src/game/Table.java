@@ -4,18 +4,16 @@ import game.pieces.None;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Table extends JFrame {
 	private Piece[][] table;
-//	private JFrame jFrame;
+	// private JFrame jFrame;
 	private JButton[][] buttons;
 	public static final Color ORIGINAL_COLOR = (new JButton()).getBackground();
-//	private static final int sleepTime = 250;
+	// private static final int sleepTime = 250;
 	GridLayout gridLayout;
 
 	public Table() {
@@ -44,89 +42,106 @@ public class Table extends JFrame {
 		return table[pos.getY()][pos.getX()];
 	}
 
-	public void swapTableCells(Position pos1, Position pos2) {
-		Piece temp;
-		temp = getTableCell(pos1);
-		setTableCell(pos1, getTableCell(pos2));
-		setTableCell(pos2, temp);
-		getTableCell(pos1).setPos(pos1);
-		getTableCell(pos2).setPos(pos2);
-		getButton(pos1).setText(getTableCell(pos1).toString());
-		getButton(pos2).setText(getTableCell(pos2).toString());
+	public void swapTableCells(Position pos1, Position pos2,Game game) {
+		if (getTableCell(pos1) instanceof None) {
+			Piece temp;
+			temp = getTableCell(pos1);
+			setTableCell(pos1, getTableCell(pos2));
+			setTableCell(pos2, temp);
+			getTableCell(pos1).setPos(pos1);
+			getTableCell(pos2).setPos(pos2);
+			getButton(pos1).setText(getTableCell(pos1).toString());
+			getButton(pos2).setText(getTableCell(pos2).toString());
+		}
+		else{
+			game.getKomadi().add(getTableCell(pos1));
+			if(game.getPlayer1().getPieces().contains(getTableCell(pos1)))
+				game.getPlayer1().getPieces().remove(getTableCell(pos1));
+			if(game.getPlayer2().getPieces().contains(getTableCell(pos1)))
+				game.getPlayer2().getPieces().remove(getTableCell(pos1));
+			setTableCell(pos1, getTableCell(pos2));
+			Piece newPiece = new None(this,pos2);
+			setTableCell(pos2, newPiece);
+			getTableCell(pos1).setPos(pos1);
+			getTableCell(pos2).setPos(pos2);
+			getButton(pos1).setText(getTableCell(pos1).toString());
+			getButton(pos2).setText(getTableCell(pos2).toString());
+			
+		}
 	}
 
-//	public void print() {
-//		for (int i = 8; i >= 0; i--) {
-//			for (int j = 0; j < table.length; j++) {
-//				Print.printSimply((table[i][j].toString() + " "));
-//			}
-//			Print.printLine("");
-//		}
-//	}
+	// public void print() {
+	// for (int i = 8; i >= 0; i--) {
+	// for (int j = 0; j < table.length; j++) {
+	// Print.printSimply((table[i][j].toString() + " "));
+	// }
+	// Print.printLine("");
+	// }
+	// }
 
-//	public Piece blinkCell(Position pos) {
-//		KeyListener listener = new MyKeyListener(pos, this);
-//		while (true) {
-//			jFrame.setVisible(true);
-//			jFrame.requestFocus();
-//			jFrame.addKeyListener(listener);
-//			Print.printAtPosition(pos);
-//			Print.printSimply(" ");
-//			try {
-//				Thread.sleep(sleepTime);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			Print.printAtPosition(pos);
-//			Print.printSimply(getTableCell(pos).toString());
-//			try {
-//				Thread.sleep(sleepTime);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			if (((MyKeyListener) listener).isPressedEnter()) {
-//				break;
-//			}
-//		}
-//		return table[pos.getY()][pos.getX()];
-//	}
+	// public Piece blinkCell(Position pos) {
+	// KeyListener listener = new MyKeyListener(pos, this);
+	// while (true) {
+	// jFrame.setVisible(true);
+	// jFrame.requestFocus();
+	// jFrame.addKeyListener(listener);
+	// Print.printAtPosition(pos);
+	// Print.printSimply(" ");
+	// try {
+	// Thread.sleep(sleepTime);
+	// } catch (InterruptedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// Print.printAtPosition(pos);
+	// Print.printSimply(getTableCell(pos).toString());
+	// try {
+	// Thread.sleep(sleepTime);
+	// } catch (InterruptedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// if (((MyKeyListener) listener).isPressedEnter()) {
+	// break;
+	// }
+	// }
+	// return table[pos.getY()][pos.getX()];
+	// }
 
-//	public Piece blinkCell(Position pos, ArrayList<Position> specialPoses) {
-//		KeyListener listener = new MyKeyListener(pos, this, specialPoses);
-//
-//		while (true) {
-//			jFrame.setVisible(true);
-//			jFrame.requestFocus();
-//			jFrame.addKeyListener(listener);
-//			Print.printAtPosition(pos);
-//			Print.printSimply(" ");
-//			try {
-//				Thread.sleep(sleepTime);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			if (!specialPoses.contains(pos)) {
-//				Print.printAtPosition(pos);
-//				Print.printSimply(getTableCell(pos).toString());
-//			} else {
-//				Print.printSpecial(pos, Print.RED, this);
-//			}
-//			try {
-//				Thread.sleep(sleepTime);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			if (((MyKeyListener) listener).isPressedEnter()) {
-//				break;
-//			}
-//
-//		}
-//		return table[pos.getY()][pos.getX()];
-//	}
+	// public Piece blinkCell(Position pos, ArrayList<Position> specialPoses) {
+	// KeyListener listener = new MyKeyListener(pos, this, specialPoses);
+	//
+	// while (true) {
+	// jFrame.setVisible(true);
+	// jFrame.requestFocus();
+	// jFrame.addKeyListener(listener);
+	// Print.printAtPosition(pos);
+	// Print.printSimply(" ");
+	// try {
+	// Thread.sleep(sleepTime);
+	// } catch (InterruptedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// if (!specialPoses.contains(pos)) {
+	// Print.printAtPosition(pos);
+	// Print.printSimply(getTableCell(pos).toString());
+	// } else {
+	// Print.printSpecial(pos, Print.RED, this);
+	// }
+	// try {
+	// Thread.sleep(sleepTime);
+	// } catch (InterruptedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// if (((MyKeyListener) listener).isPressedEnter()) {
+	// break;
+	// }
+	//
+	// }
+	// return table[pos.getY()][pos.getX()];
+	// }
 
 	public boolean isEmpty(Position pos) {
 		if (getTableCell(pos) instanceof None)
@@ -149,14 +164,14 @@ public class Table extends JFrame {
 		return buttons[pos.getY()][pos.getX()];
 	}
 
-	public Position findPressedButton(){
+	public Position findPressedButton() {
 		for (int i = 0; i < buttons.length; i++) {
 			for (int j = 0; j < buttons.length; j++) {
-				if(buttons[i][j].getBackground() == Color.ORANGE)
-					return (new Position(j,i));
+				if (buttons[i][j].getBackground() == Color.ORANGE)
+					return (new Position(j, i));
 			}
 		}
 		return null;
 	}
-	
+
 }

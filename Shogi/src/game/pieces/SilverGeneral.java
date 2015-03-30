@@ -21,8 +21,8 @@ public class SilverGeneral extends Piece {
 	}
 
 	@Override
-	public void move(Position pos, Table table) {
-		table.swapTableCells(pos, this.getPos());
+	public void move(Position pos, Table table,Game game) {
+		table.swapTableCells(pos, this.getPos(),game);
 	}
 
 	@Override

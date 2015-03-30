@@ -15,7 +15,7 @@ public class None extends Piece{
 		table.setTableCell(pos, this);
 	}
 	@Override
-	public void move(Position pos,Table table) {
+	public void move(Position pos,Table table,Game game) {
 		// TODO Auto-generated method stub
 		
 	}

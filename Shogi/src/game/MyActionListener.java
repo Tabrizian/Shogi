@@ -72,7 +72,7 @@ public class MyActionListener implements ActionListener {
 								Table.ORIGINAL_COLOR);
 					}
 				}
-				piece.move(movingPiece.getPos(), table);
+				piece.move(movingPiece.getPos(), table,game);
 				turn++;
 			}
 		} else {
@@ -92,12 +92,12 @@ public class MyActionListener implements ActionListener {
 				}
 			} else if (table.getButton(pos).getBackground() == (Color.ORANGE)) {
 
-				Piece piece = table.getTableCell(table.findPressedButton());
+				Piece piece = table.getTableCell(pos);
 
 				table.getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
-				positions = piece.getAllowedCells(game, player1);
+				positions = piece.getAllowedCells(game, player2);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
 						table.getButton(positions.get(i)).setBackground(
@@ -119,7 +119,7 @@ public class MyActionListener implements ActionListener {
 								Table.ORIGINAL_COLOR);
 					}
 				}
-				piece.move(movingPiece.getPos(), table);
+				piece.move(movingPiece.getPos(), table,game);
 				turn++;
 			}
 		}
