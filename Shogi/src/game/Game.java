@@ -49,7 +49,7 @@ public class Game {
 //	}
 	
 	public void run(){
-		JButton[][] buttons = table.getButtons();
+		JButton[][] buttons = table.getBoard().getButtons();
 		for (int k = 0; k < buttons.length; k++) {
 			for (int k2 = 0; k2 < buttons[0].length; k2++) {
 				buttons[k][k2].addActionListener(new MyActionListener(this,new Position(k2,k)));

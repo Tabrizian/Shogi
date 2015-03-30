@@ -103,5 +103,13 @@ public class Player {
 	public int getPlayerId() {
 		return playerId;
 	}
+	
+	public Piece getKing(){
+		for (int i = 0; i < pieces.size(); i++) {
+			if(pieces.get(i) instanceof King)
+				return pieces.get(i);
+		}
+		return null;
+	}
 
 }

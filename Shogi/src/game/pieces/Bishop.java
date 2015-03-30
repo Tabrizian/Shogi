@@ -21,8 +21,8 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public void move(Position pos, Table table,Game game) {
-		table.swapTableCells(pos, this.getPos(),game);
+	public boolean move(Position pos, Table table,Game game,Player player) {
+		return table.swapTableCells(pos, this.getPos(), game,player);
 	}
 	
 	@Override

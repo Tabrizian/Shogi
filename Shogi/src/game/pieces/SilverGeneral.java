@@ -21,10 +21,9 @@ public class SilverGeneral extends Piece {
 	}
 
 	@Override
-	public void move(Position pos, Table table,Game game) {
-		table.swapTableCells(pos, this.getPos(),game);
+	public boolean move(Position pos, Table table, Game game,Player player) {
+		return table.swapTableCells(pos, this.getPos(), game,player);
 	}
-
 	@Override
 	protected Position getDefaultPos() {
 		if (population == 0)
@@ -51,8 +50,15 @@ public class SilverGeneral extends Piece {
 					Position currentPos = this.getPos().getNextPos(
 							Direction.values()[i]);
 					try {
-						if (game.getTable().isEmpty(currentPos)) {
-							positions.add(new Position(currentPos));
+						if (player == game.getPlayer1()) {
+							if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+								positions.add(new Position(currentPos));
+							}
+						}
+						if (player == game.getPlayer2()) {
+							if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+								positions.add(new Position(currentPos));
+							}
 						}
 					} catch (Exception e) {
 					}
@@ -66,8 +72,15 @@ public class SilverGeneral extends Piece {
 					Position currentPos = this.getPos().getNextPos(
 							Direction.values()[i]);
 					try {
-						if (game.getTable().isEmpty(currentPos)) {
-							positions.add(new Position(currentPos));
+						if (player == game.getPlayer1()) {
+							if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+								positions.add(new Position(currentPos));
+							}
+						}
+						if (player == game.getPlayer2()) {
+							if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+								positions.add(new Position(currentPos));
+							}
 						}
 					} catch (Exception e) {
 					}

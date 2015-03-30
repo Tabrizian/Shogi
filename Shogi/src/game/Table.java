@@ -2,47 +2,48 @@ package game;
 
 import game.pieces.None;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Table extends JFrame {
 	private Piece[][] table;
 	// private JFrame jFrame;
-	private JButton[][] buttons;
+	private BoardPanel board;
+	JLabel label;
+
 	public static final Color ORIGINAL_COLOR = (new JButton()).getBackground();
 	// private static final int sleepTime = 250;
-	GridLayout gridLayout;
+	LayoutManager borderLayout;
 
 	public Table() {
 		super("SHOGI");
 		table = new Piece[9][9];
-		buttons = new JButton[9][9];
-		gridLayout = new GridLayout(table.length, table[0].length);
-		setLayout(gridLayout);
-		for (int i = 0; i < table.length; i++) {
-			for (int j = 0; j < table[0].length; j++) {
-				buttons[i][j] = new JButton();
-				table[i][j] = new None(this, new Position(j, i));
-				buttons[i][j].setText(table[i][j].toString());
-				add(buttons[i][j]);
-			}
-		}
-
+		borderLayout = new FlowLayout();
+		board = new BoardPanel();
+		label = new JLabel("");
+		board.initialize(this);
+		setLayout(borderLayout);
+		add(board, BorderLayout.CENTER);
+		add(label, BorderLayout.WEST);
 	}
 
 	public void setTableCell(Position pos, Piece type) {
 		table[pos.getY()][pos.getX()] = type;
-		buttons[pos.getY()][pos.getX()].setText(type.toString());
+		board.setButtonText(pos);
 	}
 
 	public Piece getTableCell(Position pos) {
 		return table[pos.getY()][pos.getX()];
 	}
 
-	public void swapTableCells(Position pos1, Position pos2,Game game) {
+	public boolean swapTableCells(Position pos1, Position pos2, Game game,
+			Player player) {
 		if (getTableCell(pos1) instanceof None) {
 			Piece temp;
 			temp = getTableCell(pos1);
@@ -50,23 +51,80 @@ public class Table extends JFrame {
 			setTableCell(pos2, temp);
 			getTableCell(pos1).setPos(pos1);
 			getTableCell(pos2).setPos(pos2);
-			getButton(pos1).setText(getTableCell(pos1).toString());
-			getButton(pos2).setText(getTableCell(pos2).toString());
-		}
-		else{
+			board.getButton(pos1).setText(getTableCell(pos1).toString());
+			board.getButton(pos2).setText(getTableCell(pos2).toString());
+		} else {
 			game.getKomadi().add(getTableCell(pos1));
-			if(game.getPlayer1().getPieces().contains(getTableCell(pos1)))
+			if (game.getPlayer1().getPieces().contains(getTableCell(pos1)))
 				game.getPlayer1().getPieces().remove(getTableCell(pos1));
-			if(game.getPlayer2().getPieces().contains(getTableCell(pos1)))
+			if (game.getPlayer2().getPieces().contains(getTableCell(pos1)))
 				game.getPlayer2().getPieces().remove(getTableCell(pos1));
 			setTableCell(pos1, getTableCell(pos2));
-			Piece newPiece = new None(this,pos2);
+			Piece newPiece = new None(this, pos2);
 			setTableCell(pos2, newPiece);
 			getTableCell(pos1).setPos(pos1);
 			getTableCell(pos2).setPos(pos2);
-			getButton(pos1).setText(getTableCell(pos1).toString());
-			getButton(pos2).setText(getTableCell(pos2).toString());
-			
+			board.getButton(pos1).setText(getTableCell(pos1).toString());
+			board.getButton(pos2).setText(getTableCell(pos2).toString());
+		}
+		Player goodPlayer;
+		if (player == game.getPlayer1())
+			goodPlayer = game.getPlayer2();
+		else
+			goodPlayer = game.getPlayer1();
+
+		if (!isKingCheck(goodPlayer, game)) {
+			return true;
+		} else {
+			if (getTableCell(pos2) instanceof None) {
+				Piece temp;
+				temp = getTableCell(pos1);
+				setTableCell(pos1, getTableCell(pos2));
+				setTableCell(pos2, temp);
+				getTableCell(pos1).setPos(pos1);
+				getTableCell(pos2).setPos(pos2);
+				board.getButton(pos1).setText(getTableCell(pos1).toString());
+				board.getButton(pos2).setText(getTableCell(pos2).toString());
+			} else {
+
+				Piece deleted = game.getKomadi().get(
+						game.getKomadi().size() - 1);
+				game.getKomadi().remove(game.getKomadi().size() - 1);
+				player.getPieces().add(deleted);
+				setTableCell(pos1, getTableCell(pos2));
+				setTableCell(pos2, deleted);
+				getTableCell(pos1).setPos(pos1);
+				getTableCell(pos2).setPos(pos2);
+				board.getButton(pos1).setText(getTableCell(pos1).toString());
+				board.getButton(pos2).setText(getTableCell(pos2).toString());
+			}
+			return false;
+		}
+	}
+
+	public void showMessage(String s) {
+		label.setText(s);
+	}
+
+	public boolean isKingCheck(Player player, Game game) {
+		if (player == game.getPlayer2()) {
+			for (int i = 0; i < game.getPlayer1().getPieces().size(); i++) {
+				Piece piece = game.getPlayer1().getPieces().get(i);
+				if (piece.getAllowedCells(game, game.getPlayer1()).contains(
+						game.getPlayer2().getKing().getPos())) {
+					return true;
+				}
+			}
+			return false;
+		} else {
+			for (int i = 0; i < game.getPlayer2().getPieces().size(); i++) {
+				Piece piece = game.getPlayer2().getPieces().get(i);
+				if (piece.getAllowedCells(game, game.getPlayer2()).contains(
+						game.getPlayer1().getKing().getPos())) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 
@@ -152,26 +210,12 @@ public class Table extends JFrame {
 
 	public void showGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 500);
+		setSize(600, 400);
 		setVisible(true);
 	}
 
-	public JButton[][] getButtons() {
-		return buttons;
-	}
-
-	public JButton getButton(Position pos) {
-		return buttons[pos.getY()][pos.getX()];
-	}
-
-	public Position findPressedButton() {
-		for (int i = 0; i < buttons.length; i++) {
-			for (int j = 0; j < buttons.length; j++) {
-				if (buttons[i][j].getBackground() == Color.ORANGE)
-					return (new Position(j, i));
-			}
-		}
-		return null;
+	public BoardPanel getBoard() {
+		return board;
 	}
 
 }

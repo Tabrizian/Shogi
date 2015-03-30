@@ -26,9 +26,12 @@ public class MyActionListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-
+		table.showMessage("");
 		if (turn % 2 == 0) {
-			if (table.getButton(pos).getBackground() != Color.BLUE && table.getButton(pos).getBackground() != (Color.ORANGE)) {
+			if(table.isKingCheck(game.getPlayer1(), game)){
+				table.showMessage("You're CHECK!");
+			}
+			if (table.getBoard().getButton(pos).getBackground() != Color.BLUE && table.getBoard().getButton(pos).getBackground() != (Color.ORANGE)) {
 				ArrayList<Position> positions;
 				Piece piece = table.getTableCell(pos);
 				pieces = player1.getPieces();
@@ -37,89 +40,115 @@ public class MyActionListener implements ActionListener {
 					positions = piece.getAllowedCells(game,
 							player1);
 					if (positions.size() > 0) {
-						table.getButton(pos).setBackground(Color.ORANGE);
+						table.getBoard().getButton(pos).setBackground(Color.ORANGE);
 						for (int i = 0; i < positions.size(); i++) {
-							table.getButton(positions.get(i)).setBackground(
+							table.getBoard().getButton(positions.get(i)).setBackground(
 									Color.BLUE);
 						}
 					}
+					else{
+						table.showMessage("You can't move choose another piece!");
+					}
 				}
-			} else if (table.getButton(pos).getBackground() == (Color.ORANGE)) {
+				else{
+					table.showMessage("This is not your piece!");
+				}
+			} else if (table.getBoard().getButton(pos).getBackground() == (Color.ORANGE)) {
 
-				Piece piece = table.getTableCell(table.findPressedButton());
+				Piece piece = table.getTableCell(table.getBoard().findPressedButton());
 
-				table.getButton(piece.getPos()).setBackground(
+				table.getBoard().getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
 				positions = piece.getAllowedCells(game, player1);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
-						table.getButton(positions.get(i)).setBackground(
+						table.getBoard().getButton(positions.get(i)).setBackground(
 								Table.ORIGINAL_COLOR);
 					}
 				}
 			} else {
 				Piece movingPiece = table.getTableCell(pos);
-				Piece piece = table.getTableCell(table.findPressedButton());
-
-				table.getButton(piece.getPos()).setBackground(
+				Piece piece = table.getTableCell(table.getBoard().findPressedButton());
+				boolean moved;
+				table.getBoard().getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
 				positions = piece.getAllowedCells(game, player1);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
-						table.getButton(positions.get(i)).setBackground(
+						table.getBoard().getButton(positions.get(i)).setBackground(
 								Table.ORIGINAL_COLOR);
 					}
 				}
-				piece.move(movingPiece.getPos(), table,game);
-				turn++;
+				moved = piece.move(movingPiece.getPos(), table,game,game.getPlayer1());
+				if(table.isKingCheck(game.getPlayer1(), game)){
+					table.showMessage("You're CHECK!");
+				}
+				if(moved)
+					turn++;
 			}
+		//Sare gardane ...
 		} else {
-			if (table.getButton(pos).getBackground() != Color.BLUE &&table.getButton(pos).getBackground() != (Color.ORANGE)) {
+			if(table.isKingCheck(game.getPlayer2(), game)){
+				table.showMessage("You're CHECK!");
+			}
+			if (table.getBoard().getButton(pos).getBackground() != Color.BLUE &&table.getBoard().getButton(pos).getBackground() != (Color.ORANGE)) {
 				ArrayList<Position> positions;
 				Piece piece = table.getTableCell(pos);
 				pieces = player2.getPieces();
 				if (pieces.contains(piece)) {
 					positions = piece.getAllowedCells(game,player2);
 					if (positions.size() > 0) {
-						table.getButton(pos).setBackground(Color.ORANGE);
+						table.getBoard().getButton(pos).setBackground(Color.ORANGE);
 						for (int i = 0; i < positions.size(); i++) {
-							table.getButton(positions.get(i)).setBackground(
+							table.getBoard().getButton(positions.get(i)).setBackground(
 									Color.BLUE);
 						}
 					}
+					else{
+						table.showMessage("You can't move choose another piece!");
+					}
 				}
-			} else if (table.getButton(pos).getBackground() == (Color.ORANGE)) {
+				else{
+					table.showMessage("This is not your piece!");
+				}
+				
+			} else if (table.getBoard().getButton(pos).getBackground() == (Color.ORANGE)) {
 
 				Piece piece = table.getTableCell(pos);
 
-				table.getButton(piece.getPos()).setBackground(
+				table.getBoard().getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
 				positions = piece.getAllowedCells(game, player2);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
-						table.getButton(positions.get(i)).setBackground(
+						table.getBoard().getButton(positions.get(i)).setBackground(
 								Table.ORIGINAL_COLOR);
 					}
 				}
 
 			} else {
+				boolean moved;
 				Piece movingPiece = table.getTableCell(pos);
-				Piece piece = table.getTableCell(table.findPressedButton());
+				Piece piece = table.getTableCell(table.getBoard().findPressedButton());
 
-				table.getButton(piece.getPos()).setBackground(
+				table.getBoard().getButton(piece.getPos()).setBackground(
 						Table.ORIGINAL_COLOR);
 				ArrayList<Position> positions;
 				positions = piece.getAllowedCells(game, player2);
 				if (positions.size() > 0) {
 					for (int i = 0; i < positions.size(); i++) {
-						table.getButton(positions.get(i)).setBackground(
+						table.getBoard().getButton(positions.get(i)).setBackground(
 								Table.ORIGINAL_COLOR);
 					}
 				}
-				piece.move(movingPiece.getPos(), table,game);
+				moved = piece.move(movingPiece.getPos(), table,game,game.getPlayer2());
+				if(table.isKingCheck(game.getPlayer2(), game)){
+					table.showMessage("You're CHECK!");
+				}
+				if(moved)
 				turn++;
 			}
 		}
