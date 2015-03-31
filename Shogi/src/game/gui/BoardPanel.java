@@ -1,9 +1,11 @@
-package game;
+package game.gui;
+import game.Position;
+import game.Table;
+import game.pieces.None;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
-
-import game.pieces.None;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
