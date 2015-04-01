@@ -54,6 +54,7 @@ public class Game {
 				buttons[k][k2].addActionListener(new NormalButtonsListener(this,new Position(k2,k)));
 			}
 		}
+		
 		showGame();
 //		while(true){
 //			showGame();

@@ -19,6 +19,7 @@ public class BeatenPicecesPanel extends JPanel {
 	
 	private HashMap<Piece,JButton> komadi;
 	private BeatenButtonsListener listener;
+	private Game game;
 	private boolean pressed = false;
 	public BeatenPicecesPanel() {
 		komadi = new HashMap<>();
@@ -33,6 +34,7 @@ public class BeatenPicecesPanel extends JPanel {
 		listener = new BeatenButtonsListener(this, piece,table,game);
 		button.addActionListener(listener);
 		add(button);
+		this.game = game;
 	}
 	
 	public void removeFromPanel(Piece piece){

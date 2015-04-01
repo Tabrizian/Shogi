@@ -44,7 +44,7 @@ public class GoldGeneral extends Piece {
 
 	@Override
 	public ArrayList<Position> getAllowedCells(Game game, Player player) {
-		if (player.getPlayerId() == 1) {
+		if (player == game.getPlayer1()) {
 			ArrayList<Position> positions = new ArrayList<>();
 			for (int i = 0; i < 8; i++) {
 				if (i != 3 && i != 5) {

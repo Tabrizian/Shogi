@@ -44,7 +44,7 @@ public class SilverGeneral extends Piece {
 	@Override
 	public ArrayList<Position> getAllowedCells(Game game,Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (player.getPlayerId() == 1) {
+		if (game.getPlayer1() == player) {
 			for (int i = 0; i < 8; i++) {
 				if (i != 2 && i != 4 && i != 6) {
 					Position currentPos = this.getPos().getNextPos(

@@ -116,13 +116,7 @@ public class Table extends JFrame {
 			board.getButton(pos1).setText(getTableCell(pos1).toString());
 			board.getButton(pos2).setText(getTableCell(pos2).toString());
 		}
-		Player goodPlayer;
-		if (player == game.getPlayer1())
-			goodPlayer = game.getPlayer2();
-		else
-			goodPlayer = game.getPlayer1();
-
-		if (!isKingCheck(goodPlayer, game)) {
+		if (!isKingCheck(player, game)) {
 			return true;
 		} else {
 			undoMove(pos1, pos2, game, player);
@@ -179,6 +173,16 @@ public class Table extends JFrame {
 
 	public BeatenPicecesPanel getPlayer2Komadi() {
 		return player2Komadi;
+	}
+	
+	public boolean isACellSelected(){
+		for (int i = 0; i < getBoard().getButtons().length; i++) {
+			for (int j = 0; j < getBoard().getButtons().length; j++) {
+				if(getBoard().getButtons()[i][j].getBackground() == Color.ORANGE)
+					return true;
+			}
+		}
+		return false;
 	}
 
 }
