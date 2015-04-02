@@ -21,9 +21,10 @@ public class SilverGeneral extends Piece {
 	}
 
 	@Override
-	public boolean move(Position pos, Table table, Game game,Player player) {
-		return table.swapTableCells(pos, this.getPos(), game,player)[0];
+	public boolean move(Position pos, Table table, Game game, Player player) {
+		return table.swapTableCells(pos, this.getPos(), game, player)[0];
 	}
+
 	@Override
 	protected Position getDefaultPos() {
 		if (population == 0)
@@ -38,47 +39,103 @@ public class SilverGeneral extends Piece {
 
 	@Override
 	public String toString() {
-		return "S";
+		if (upgraded) {
+			return "S+";
+		} else {
+			return "S";
+		}
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Game game,Player player) {
+	public ArrayList<Position> getAllowedCells(Game game, Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (game.getPlayer1() == player) {
-			for (int i = 0; i < 8; i++) {
-				if (i != 2 && i != 4 && i != 6) {
-					Position currentPos = this.getPos().getNextPos(
-							Direction.values()[i]);
-					try {
-						if (player == game.getPlayer1()) {
-							if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
-								positions.add(new Position(currentPos));
+		if (upgraded) {
+			if (game.getPlayer1() == player) {
+				for (int i = 0; i < 8; i++) {
+					if (i != 2 && i != 4 && i != 6) {
+						Position currentPos = this.getPos().getNextPos(
+								Direction.values()[i]);
+						try {
+							if (player == game.getPlayer1()) {
+								if (game.getPlayer2()
+										.getPieces()
+										.contains(
+												game.getTable().getTableCell(
+														currentPos))
+										|| game.getTable().isEmpty(currentPos)) {
+									positions.add(new Position(currentPos));
+								}
 							}
-						}
-						if (player == game.getPlayer2()) {
-							if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
-								positions.add(new Position(currentPos));
+							if (player == game.getPlayer2()) {
+								if (game.getPlayer1()
+										.getPieces()
+										.contains(
+												game.getTable().getTableCell(
+														currentPos))
+										|| game.getTable().isEmpty(currentPos)) {
+									positions.add(new Position(currentPos));
+								}
 							}
+						} catch (Exception e) {
 						}
-					} catch (Exception e) {
 					}
 				}
 			}
-		}
 
-		else {
+			else {
+				for (int i = 0; i < 8; i++) {
+					if (i != 2 && i != 0 && i != 6) {
+						Position currentPos = this.getPos().getNextPos(
+								Direction.values()[i]);
+						try {
+							if (player == game.getPlayer1()) {
+								if (game.getPlayer2()
+										.getPieces()
+										.contains(
+												game.getTable().getTableCell(
+														currentPos))
+										|| game.getTable().isEmpty(currentPos)) {
+									positions.add(new Position(currentPos));
+								}
+							}
+							if (player == game.getPlayer2()) {
+								if (game.getPlayer1()
+										.getPieces()
+										.contains(
+												game.getTable().getTableCell(
+														currentPos))
+										|| game.getTable().isEmpty(currentPos)) {
+									positions.add(new Position(currentPos));
+								}
+							}
+						} catch (Exception e) {
+						}
+					}
+				}
+			}
+		} else {
 			for (int i = 0; i < 8; i++) {
-				if (i != 2 && i != 0 && i != 6) {
+				if (i != 1 && i != 7) {
 					Position currentPos = this.getPos().getNextPos(
 							Direction.values()[i]);
 					try {
 						if (player == game.getPlayer1()) {
-							if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+							if (game.getPlayer2()
+									.getPieces()
+									.contains(
+											game.getTable().getTableCell(
+													currentPos))
+									|| game.getTable().isEmpty(currentPos)) {
 								positions.add(new Position(currentPos));
 							}
 						}
 						if (player == game.getPlayer2()) {
-							if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
+							if (game.getPlayer1()
+									.getPieces()
+									.contains(
+											game.getTable().getTableCell(
+													currentPos))
+									|| game.getTable().isEmpty(currentPos)) {
 								positions.add(new Position(currentPos));
 							}
 						}
@@ -89,5 +146,5 @@ public class SilverGeneral extends Piece {
 		}
 		return positions;
 	}
-	
+
 }

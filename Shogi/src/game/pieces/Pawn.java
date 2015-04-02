@@ -36,33 +36,69 @@ public class Pawn extends Piece {
 
 	@Override
 	public String toString() {
-		return "P";
+		if (upgraded) {
+			return "P+";
+		} else {
+			return "P";
+		}
 	}
 
 	@Override
 	public ArrayList<Position> getAllowedCells(Game game, Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (player.getPlayerId() == 1) {
-			Position currentPos = this.getPos().getNextPos(
-					Direction.values()[0]);
-			try {
-				if (game.getPlayer2().getPieces()
-						.contains(game.getTable().getTableCell(currentPos))
-						|| game.getTable().isEmpty(currentPos)) {
-					positions.add(new Position(currentPos));
+		if (upgraded) {
+			if (player.getPlayerId() == 1) {
+				Position currentPos = this.getPos().getNextPos(
+						Direction.values()[0]);
+				try {
+					if (game.getPlayer2().getPieces()
+							.contains(game.getTable().getTableCell(currentPos))
+							|| game.getTable().isEmpty(currentPos)) {
+						positions.add(new Position(currentPos));
+					}
+				} catch (Exception e) {
 				}
-			} catch (Exception e) {
+			} else {
+				Position currentPos = this.getPos().getNextPos(
+						Direction.values()[4]);
+				try {
+					if (game.getPlayer1().getPieces()
+							.contains(game.getTable().getTableCell(currentPos))
+							|| game.getTable().isEmpty(currentPos)) {
+						positions.add(new Position(currentPos));
+					}
+				} catch (Exception e) {
+				}
 			}
 		} else {
-			Position currentPos = this.getPos().getNextPos(
-					Direction.values()[4]);
-			try {
-				if (game.getPlayer1().getPieces()
-						.contains(game.getTable().getTableCell(currentPos))
-						|| game.getTable().isEmpty(currentPos)) {
-					positions.add(new Position(currentPos));
+			for (int i = 0; i < 8; i++) {
+				if (i != 1 && i != 7) {
+					Position currentPos = this.getPos().getNextPos(
+							Direction.values()[i]);
+					try {
+						if (player == game.getPlayer1()) {
+							if (game.getPlayer2()
+									.getPieces()
+									.contains(
+											game.getTable().getTableCell(
+													currentPos))
+									|| game.getTable().isEmpty(currentPos)) {
+								positions.add(new Position(currentPos));
+							}
+						}
+						if (player == game.getPlayer2()) {
+							if (game.getPlayer1()
+									.getPieces()
+									.contains(
+											game.getTable().getTableCell(
+													currentPos))
+									|| game.getTable().isEmpty(currentPos)) {
+								positions.add(new Position(currentPos));
+							}
+						}
+					} catch (Exception e) {
+					}
 				}
-			} catch (Exception e) {
 			}
 		}
 		return positions;

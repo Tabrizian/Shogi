@@ -96,20 +96,22 @@ public class Bishop extends Piece {
 			}
 		} catch (Exception e) {
 		}
-		try {
-			for (int i = 0; i < 8; i += 2) {
-				Position currentPos = this.getPos().getNextPos(
-						Direction.values()[i]);
-				try {
-					if (player.getPieces().contains(
-							game.getTable().getTableCell(currentPos))
-							|| game.getTable().isEmpty(currentPos)) {
-						positions.add(new Position(currentPos));
+		if (upgraded) {
+			try {
+				for (int i = 0; i < 8; i += 2) {
+					Position currentPos = this.getPos().getNextPos(
+							Direction.values()[i]);
+					try {
+						if (player.getPieces().contains(
+								game.getTable().getTableCell(currentPos))
+								|| game.getTable().isEmpty(currentPos)) {
+							positions.add(new Position(currentPos));
+						}
+					} catch (Exception e) {
 					}
-				} catch (Exception e) {
 				}
+			} catch (Exception e) {
 			}
-		} catch (Exception e) {
 		}
 		return positions;
 	}
