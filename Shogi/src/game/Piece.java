@@ -2,8 +2,6 @@ package game;
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-
 public abstract class Piece {
 
 	private Position pos;

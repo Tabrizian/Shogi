@@ -2,8 +2,6 @@ package game;
 
 import game.gui.NormalButtonsListener;
 
-import java.util.ArrayList;
-
 import javax.swing.JButton;
 
 public class Game {
@@ -15,7 +13,7 @@ public class Game {
 	private int turn;
 
 	public Game() {
-		table = new Table();
+		table = new Table(this);
 		player1 = new Player(table,1);
 		player2 = new Player(table,2);
 		

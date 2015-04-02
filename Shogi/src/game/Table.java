@@ -7,12 +7,11 @@ import game.pieces.None;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.LayoutManager;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Table extends JFrame {
@@ -21,12 +20,13 @@ public class Table extends JFrame {
 	private FormPanel formPanel;
 	private BeatenPicecesPanel player1Komadi;
 	private BeatenPicecesPanel player2Komadi;
-
+	private Game game;
 	public static final Color ORIGINAL_COLOR = (new JButton()).getBackground();
 	LayoutManager borderLayout;
 
-	public Table() {
+	public Table(Game game) {
 		super("SHOGI");
+		this.game = game;
 		formPanel = new FormPanel();
 		table = new Piece[9][9];
 		borderLayout = new BorderLayout();
@@ -39,23 +39,44 @@ public class Table extends JFrame {
 		add(formPanel, BorderLayout.WEST);
 		JPanel beatenPanel = new JPanel();
 		beatenPanel.setLayout(new BorderLayout());
-		beatenPanel.add(player1Komadi,BorderLayout.EAST);
-		beatenPanel.add(player2Komadi,BorderLayout.WEST);
+		beatenPanel.add(player1Komadi, BorderLayout.EAST);
+		beatenPanel.add(player2Komadi, BorderLayout.WEST);
 		add(beatenPanel, BorderLayout.EAST);
 	}
 
-	public void setTableCell(Position pos, Piece type) {
-		table[pos.getY()][pos.getX()] = type;
-		type.setPos(pos);
+	public void setTableCell(Position pos, Piece piece) {
+		table[pos.getY()][pos.getX()] = piece;
+		piece.setPos(pos);
 		board.setButtonText(pos);
+
+	}
+
+	public boolean setTableKomadiCell(Position pos, Piece piece) {
+		if (game.getPlayer1().getKomadi().contains(piece)) {
+			if (pos.getY() <= 5) {
+				setTableCell(pos, piece);
+				return true;
+			}
+		} else if (game.getPlayer2().getKomadi().contains(piece)) {
+			if (pos.getY() >= 3) {
+				setTableCell(pos, piece);
+				return true;
+			}
+		} else {
+			setTableCell(pos, piece);
+			return true;
+		}
+		return false;
 	}
 
 	public Piece getTableCell(Position pos) {
 		return table[pos.getY()][pos.getX()];
 	}
 
-	public void undoMove(Position pos1, Position pos2, Game game, Player player) {
-		if (getTableCell(pos2) instanceof None) {
+	public void undoMove(Position pos1, Position pos2, Game game,
+			Player player, boolean delete) {
+
+		if (!delete) {
 			Piece temp;
 			temp = getTableCell(pos1);
 			setTableCell(pos1, getTableCell(pos2));
@@ -65,18 +86,19 @@ public class Table extends JFrame {
 			board.getButton(pos1).setText(getTableCell(pos1).toString());
 			board.getButton(pos2).setText(getTableCell(pos2).toString());
 		} else {
-
 			Piece deleted = player.getKomadi().get(
 					player.getKomadi().size() - 1);
 			player.getKomadi().remove(player.getKomadi().size() - 1);
-			if (player == game.getPlayer1()) {
-				getPlayer1Komadi().removeFromPanel(getTableCell(pos1));
+			if (player == game.getPlayer2()) {
+				game.getPlayer1().getPieces().add(deleted);
+				getPlayer2Komadi().removeFromPanel(deleted);
 			} else {
-				getPlayer2Komadi().removeFromPanel(getTableCell(pos1));
+				game.getPlayer2().getPieces().add(deleted);
+				getPlayer1Komadi().removeFromPanel(deleted);
 			}
-			player.getPieces().add(deleted);
-			setTableCell(pos1, getTableCell(pos2));
-			setTableCell(pos2, deleted);
+			Piece piece = getTableCell(pos1);
+			setTableCell(pos1, deleted);
+			setTableCell(pos2, piece);
 			getTableCell(pos1).setPos(pos1);
 			getTableCell(pos2).setPos(pos2);
 			board.getButton(pos1).setText(getTableCell(pos1).toString());
@@ -84,8 +106,9 @@ public class Table extends JFrame {
 		}
 	}
 
-	public boolean swapTableCells(Position pos1, Position pos2, Game game,
+	public boolean[] swapTableCells(Position pos1, Position pos2, Game game,
 			Player player) {
+		boolean res[] = new boolean[2];
 		if (getTableCell(pos1) instanceof None) {
 			Piece temp;
 			temp = getTableCell(pos1);
@@ -95,14 +118,24 @@ public class Table extends JFrame {
 			getTableCell(pos2).setPos(pos2);
 			board.getButton(pos1).setText(getTableCell(pos1).toString());
 			board.getButton(pos2).setText(getTableCell(pos2).toString());
+			if (!isKingCheck(player, game)) {
+				res[0] = true;
+				res[1] = false;
+				return res;
+			} else {
+				res[0] = false;
+				res[1] = false;
+				undoMove(pos1, pos2, game, player, false);
+				return res;
+			}
 		} else {
 			player.getKomadi().add(getTableCell(pos1));
 			if (player == game.getPlayer1()) {
-				getPlayer1Komadi().addToPanel(getTableCell(pos1),this,game);
-				
+				getPlayer1Komadi().addToPanel(getTableCell(pos1), this, game);
+
 			} else {
-				getPlayer2Komadi().addToPanel(getTableCell(pos1),this,game);
-				
+				getPlayer2Komadi().addToPanel(getTableCell(pos1), this, game);
+
 			}
 			if (game.getPlayer1().getPieces().contains(getTableCell(pos1)))
 				game.getPlayer1().getPieces().remove(getTableCell(pos1));
@@ -115,13 +148,19 @@ public class Table extends JFrame {
 			getTableCell(pos2).setPos(pos2);
 			board.getButton(pos1).setText(getTableCell(pos1).toString());
 			board.getButton(pos2).setText(getTableCell(pos2).toString());
+			if (!isKingCheck(player, game)) {
+				res[0] = true;
+				res[1] = true;
+				return res;
+			} else {
+				undoMove(pos1, pos2, game, player, true);
+
+				res[0] = false;
+				res[1] = true;
+				return res;
+			}
 		}
-		if (!isKingCheck(player, game)) {
-			return true;
-		} else {
-			undoMove(pos1, pos2, game, player);
-			return false;
-		}
+
 	}
 
 	public void showMessage(String s) {
@@ -150,6 +189,24 @@ public class Table extends JFrame {
 		}
 	}
 
+	public boolean isKingMate(Player player, Game game) {
+		ArrayList<Piece> pieces = player.getPieces();
+		for (Piece piece : pieces) {
+			ArrayList<Position> positions = piece.getAllowedCells(game, player);
+			for (Position pos : positions) {
+				Position pos1 = pos;
+				Position pos2 = new Position(piece.getPos());
+				boolean moved[] = swapTableCells(pos, piece.getPos(), game,
+						player);
+				if (moved[0]) {
+					undoMove(pos1, pos2, game, player, moved[1]);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	public boolean isEmpty(Position pos) {
 		if (getTableCell(pos) instanceof None)
 			return true;
@@ -174,11 +231,11 @@ public class Table extends JFrame {
 	public BeatenPicecesPanel getPlayer2Komadi() {
 		return player2Komadi;
 	}
-	
-	public boolean isACellSelected(){
+
+	public boolean isACellSelected() {
 		for (int i = 0; i < getBoard().getButtons().length; i++) {
 			for (int j = 0; j < getBoard().getButtons().length; j++) {
-				if(getBoard().getButtons()[i][j].getBackground() == Color.ORANGE)
+				if (getBoard().getButtons()[i][j].getBackground() == Color.ORANGE)
 					return true;
 			}
 		}

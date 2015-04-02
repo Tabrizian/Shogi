@@ -30,8 +30,9 @@ public class BeatenButtonsListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
-		if (panel.getKomadi().get(piece).getBackground() != Color.GREEN && !panel.isPressed()) {
+
+		if (panel.getKomadi().get(piece).getBackground() != Color.GREEN
+				&& !panel.isPressed()) {
 			if (game.getTurn() % 2 == 0) {
 				if (game.getPlayer1().getKomadi().contains(piece)) {
 					panel.getKomadi().get(piece).setBackground(Color.GREEN);
@@ -44,7 +45,7 @@ public class BeatenButtonsListener implements ActionListener {
 				}
 			}
 		}
-		else{
+		else if(panel.getKomadi().get(piece).getBackground() == Color.GREEN){
 			panel.getKomadi().get(piece).setBackground(Table.ORIGINAL_COLOR);
 			panel.setPressed(false);
 		}

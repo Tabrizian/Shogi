@@ -34,12 +34,17 @@ public class NormalButtonsListener implements ActionListener {
 		table.showMessage("");
 
 		if (game.getTurn() % 2 == 0) {
+			if(table.isKingMate(game.getPlayer1(), game)){
+				table.showMessage("You're CHECKMATE!");
+				return;
+			}
 			if (table.isKingCheck(game.getPlayer1(), game)) {
 				table.showMessage("You're CHECK!");
 			}
 			if (!table.getPlayer1Komadi().isPressed()) {
 				if (table.getBoard().getButton(pos).getBackground() != Color.BLUE
-						&& table.getBoard().getButton(pos).getBackground() != (Color.ORANGE) && !table.isACellSelected()) {
+						&& table.getBoard().getButton(pos).getBackground() != (Color.ORANGE)
+						&& !table.isACellSelected()) {
 					ArrayList<Position> positions;
 					Piece piece = table.getTableCell(pos);
 					pieces = game.getPlayer1().getPieces();
@@ -74,7 +79,7 @@ public class NormalButtonsListener implements ActionListener {
 									.setBackground(Table.ORIGINAL_COLOR);
 						}
 					}
-				} else if(table.getBoard().getButton(pos).getBackground() == Color.BLUE) {
+				} else if (table.getBoard().getButton(pos).getBackground() == Color.BLUE) {
 					Piece movingPiece = table.getTableCell(pos);
 					Piece piece = table.getTableCell(table.getBoard()
 							.findPressedButton());
@@ -97,33 +102,48 @@ public class NormalButtonsListener implements ActionListener {
 					if (moved)
 						game.setTurn(++turn);
 				}
-			} else {
-				if (table.isEmpty(pos)) {
-					table.setTableCell(pos, table.getPlayer1Komadi()
-							.getPressedPiece());
-					game.getPlayer1().getPieces().add(
-							table.getPlayer1Komadi().getPressedPiece());
-					table.getPlayer1Komadi().removeFromPanel(
-							table.getPlayer1Komadi().getPressedPiece());
-					game.getPlayer1().getKomadi().remove(
-							table.getPlayer1Komadi().getPressedPiece());
-					table.getPlayer1Komadi().setPressed(false);
-					game.setTurn(++turn);
-				}
-				if (table.isKingCheck(game.getPlayer2(), game)) {
-					table.showMessage("You're CHECK!");
+			} else if(table.getPlayer1Komadi().isPressed() && !table.isACellSelected()){
+			
+				
+					if (table.isEmpty(pos)) {
+						boolean setted;
+						setted = table.setTableKomadiCell(pos, table.getPlayer1Komadi()
+								.getPressedPiece());
+						if (setted) {
+						table.setTableCell(pos, table.getPlayer1Komadi()
+								.getPressedPiece());
+						game.getPlayer1()
+								.getPieces()
+								.add(table.getPlayer1Komadi().getPressedPiece());
+						table.getPlayer1Komadi().removeFromPanel(
+								table.getPlayer1Komadi().getPressedPiece());
+						game.getPlayer1()
+								.getKomadi()
+								.remove(table.getPlayer1Komadi()
+										.getPressedPiece());
+						table.getPlayer1Komadi().setPressed(false);
+						game.setTurn(++turn);
+					}
+					if (table.isKingCheck(game.getPlayer2(), game)) {
+						table.showMessage("You're CHECK!");
+					}
 				}
 
 			}
 
 			// Sare gardane ...
 		} else {
+			if(table.isKingMate(game.getPlayer2(), game)){
+				table.showMessage("You're CHECKMATE!");
+				return;
+			}
 			if (table.isKingCheck(game.getPlayer2(), game)) {
 				table.showMessage("You're CHECK!");
 			}
 			if (!table.getPlayer2Komadi().isPressed()) {
 				if (table.getBoard().getButton(pos).getBackground() != Color.BLUE
-						&& table.getBoard().getButton(pos).getBackground() != (Color.ORANGE) && !table.isACellSelected()) {
+						&& table.getBoard().getButton(pos).getBackground() != (Color.ORANGE)
+						&& !table.isACellSelected()) {
 					ArrayList<Position> positions;
 					Piece piece = table.getTableCell(pos);
 					pieces = game.getPlayer2().getPieces();
@@ -158,7 +178,7 @@ public class NormalButtonsListener implements ActionListener {
 						}
 					}
 
-				} else if(table.getBoard().getButton(pos).getBackground() == Color.BLUE){
+				} else if (table.getBoard().getButton(pos).getBackground() == Color.BLUE) {
 					boolean moved;
 					Piece movingPiece = table.getTableCell(pos);
 					Piece piece = table.getTableCell(table.getBoard()
@@ -182,21 +202,27 @@ public class NormalButtonsListener implements ActionListener {
 					if (moved)
 						game.setTurn(++turn);
 				}
-			} else  {
+			} else if(table.getPlayer2Komadi().isPressed() && !table.isACellSelected()) {
 				if (table.isEmpty(pos)) {
-					table.setTableCell(pos, table.getPlayer2Komadi()
-							.getPressedPiece());
-					game.getPlayer2().getPieces().add(
-							table.getPlayer2Komadi().getPressedPiece());
-					table.getPlayer2Komadi().removeFromPanel(
-							table.getPlayer2Komadi().getPressedPiece());
-					game.getPlayer2().getKomadi().remove(
-							table.getPlayer2Komadi().getPressedPiece());
-					table.getPlayer2Komadi().setPressed(false);
-					if (table.isKingCheck(game.getPlayer1(), game)) {
-						table.showMessage("You're CHECK!");
+					boolean setted;
+					setted = table.setTableKomadiCell(pos, table
+							.getPlayer2Komadi().getPressedPiece());
+					if (setted) {
+						game.getPlayer2()
+								.getPieces()
+								.add(table.getPlayer2Komadi().getPressedPiece());
+						table.getPlayer2Komadi().removeFromPanel(
+								table.getPlayer2Komadi().getPressedPiece());
+						game.getPlayer2()
+								.getKomadi()
+								.remove(table.getPlayer2Komadi()
+										.getPressedPiece());
+						table.getPlayer2Komadi().setPressed(false);
+						if (table.isKingCheck(game.getPlayer1(), game)) {
+							table.showMessage("You're CHECK!");
+						}
+						game.setTurn(++turn);
 					}
-					game.setTurn(++turn);
 				}
 			}
 		}

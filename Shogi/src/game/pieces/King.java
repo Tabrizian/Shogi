@@ -22,7 +22,7 @@ public class King extends Piece {
 
 	@Override
 	public boolean move(Position pos, Table table,Game game,Player player) {
-		return table.swapTableCells(pos, this.getPos(),game,player);
+		return table.swapTableCells(pos, this.getPos(),game,player)[0];
 	}
 
 	@Override

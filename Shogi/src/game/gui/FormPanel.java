@@ -1,11 +1,7 @@
 package game.gui;
 
-import game.Piece;
-import game.Player;
-
 import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
