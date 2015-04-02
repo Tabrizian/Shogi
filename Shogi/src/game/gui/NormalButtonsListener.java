@@ -32,7 +32,6 @@ public class NormalButtonsListener implements ActionListener {
 
 	public void actionPerformed(ActionEvent arg0) {
 		table.showMessage("");
-
 		if (game.getTurn() % 2 == 0) {
 			if(table.isKingMate(game.getPlayer1(), game)){
 				table.showMessage("You're CHECKMATE!");
@@ -226,6 +225,7 @@ public class NormalButtonsListener implements ActionListener {
 				}
 			}
 		}
+		table.colorTable(game);
 	}
 
 	public Position getPos() {

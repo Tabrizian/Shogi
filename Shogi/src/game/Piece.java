@@ -9,7 +9,7 @@ public abstract class Piece {
 	public abstract boolean move(Position pos,Table table,Game game,Player player);	
 	protected abstract Position getDefaultPos();
 	public abstract ArrayList<Position> getAllowedCells(Game game,Player player);
-	protected boolean isUpgraded = false;
+	protected boolean upgraded = false;
 	
 	public Position getPos() {
 		return pos;

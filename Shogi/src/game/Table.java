@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class Table extends JFrame {
 	private Piece[][] table;
@@ -22,6 +23,7 @@ public class Table extends JFrame {
 	private BeatenPicecesPanel player2Komadi;
 	private Game game;
 	public static final Color ORIGINAL_COLOR = (new JButton()).getBackground();
+	public static final Border ORIGINAL_BORDER = (new JButton()).getBorder();
 	LayoutManager borderLayout;
 
 	public Table(Game game) {
@@ -240,6 +242,21 @@ public class Table extends JFrame {
 			}
 		}
 		return false;
+	}
+	
+	public void colorTable(Game game){
+		ArrayList<Piece> piecesPlayer1 = game.getPlayer1().getPieces();
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table.length; j++) {
+				if(piecesPlayer1.contains(getTableCell(new Position(j,i)))){
+					board.setBorder(new Position(j,i));
+				}
+				else{
+					board.getButtons()[i][j].setBorder(ORIGINAL_BORDER);;
+				}
+			}
+		}
+		
 	}
 
 }

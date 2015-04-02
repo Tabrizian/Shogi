@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,7 +20,7 @@ public class BoardPanel extends JPanel {
 		
 	}
 	public void initialize(Table table){
-		layout = new GridLayout(9,9);
+		layout = new GridLayout(9,9,2,2);
 		setLayout(layout);
 		buttons = new JButton[9][9];
 		this.table = table;
@@ -52,5 +53,12 @@ public class BoardPanel extends JPanel {
 	
 	public void setButtonText(Position pos){
 		buttons[pos.getY()][pos.getX()].setText(table.getTableCell(new Position(pos.getX(), pos.getY())).toString());
+	}
+	
+	public void setBorder(Position pos){
+		buttons[pos.getY()][pos.getX()].setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+	}
+	public void setDefaultBorder(Position pos){
+		buttons[pos.getY()][pos.getX()].setBorder(BorderFactory.createEmptyBorder());;
 	}
 }

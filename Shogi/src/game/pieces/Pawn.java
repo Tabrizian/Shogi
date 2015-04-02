@@ -21,8 +21,8 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean move(Position pos, Table table,Game game,Player player) {
-		return table.swapTableCells(pos, this.getPos(),game,player)[0];
+	public boolean move(Position pos, Table table, Game game, Player player) {
+		return table.swapTableCells(pos, this.getPos(), game, player)[0];
 	}
 
 	@Override
@@ -40,40 +40,27 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public ArrayList<Position> getAllowedCells(Game game,Player player) {
+	public ArrayList<Position> getAllowedCells(Game game, Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
 		if (player.getPlayerId() == 1) {
 			Position currentPos = this.getPos().getNextPos(
 					Direction.values()[0]);
-
 			try {
-				if (player == game.getPlayer1()) {
-					if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
-						positions.add(new Position(currentPos));
-					}
-				}
-				if (player == game.getPlayer2()) {
-					if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
-						positions.add(new Position(currentPos));
-					}
+				if (game.getPlayer2().getPieces()
+						.contains(game.getTable().getTableCell(currentPos))
+						|| game.getTable().isEmpty(currentPos)) {
+					positions.add(new Position(currentPos));
 				}
 			} catch (Exception e) {
 			}
-		}
-		else{
+		} else {
 			Position currentPos = this.getPos().getNextPos(
 					Direction.values()[4]);
-
 			try {
-				if (player == game.getPlayer1()) {
-					if (game.getPlayer2().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
-						positions.add(new Position(currentPos));
-					}
-				}
-				if (player == game.getPlayer2()) {
-					if (game.getPlayer1().getPieces().contains(game.getTable().getTableCell(currentPos))||game.getTable().isEmpty(currentPos)) {
-						positions.add(new Position(currentPos));
-					}
+				if (game.getPlayer1().getPieces()
+						.contains(game.getTable().getTableCell(currentPos))
+						|| game.getTable().isEmpty(currentPos)) {
+					positions.add(new Position(currentPos));
 				}
 			} catch (Exception e) {
 			}
