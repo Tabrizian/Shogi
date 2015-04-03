@@ -46,7 +46,7 @@ public class Pawn extends Piece {
 	@Override
 	public ArrayList<Position> getAllowedCells(Game game, Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (upgraded) {
+		if (!upgraded) {
 			if (player.getPlayerId() == 1) {
 				Position currentPos = this.getPos().getNextPos(
 						Direction.values()[0]);
@@ -102,5 +102,16 @@ public class Pawn extends Piece {
 			}
 		}
 		return positions;
+	}
+	
+	@Override
+	public void chechForUpgrade(Player player) {
+		if (player.getPlayerId() == 1) {
+			if (getPos().getY() >= 6)
+				upgraded = true;
+		} else {
+			if (getPos().getY() <= 2)
+				upgraded = true;
+		}
 	}
 }

@@ -49,33 +49,37 @@ public class Lance extends Piece {
 	public ArrayList<Position> getAllowedCells(Game game, Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
 
-		if (upgraded) {
-			try {
-				Position current;
-				for (current = this.getPos().getNextPos(Direction.NORTH); game
-						.getTable().isEmpty(current); current = current
-						.getNextPos(Direction.NORTH)) {
-					positions.add(new Position(current));
+		if (!upgraded) {
+			if (player.getPlayerId() == 1) {
+				try {
+					Position current;
+					for (current = this.getPos().getNextPos(Direction.NORTH); game
+							.getTable().isEmpty(current); current = current
+							.getNextPos(Direction.NORTH)) {
+						positions.add(new Position(current));
+					}
+					if (!player.getPieces().contains(
+							game.getTable().getTableCell(current))) {
+						positions.add(current);
+					}
+				} catch (Exception e) {
 				}
-				if (!player.getPieces().contains(
-						game.getTable().getTableCell(current))) {
-					positions.add(current);
+			} else {
+				try {
+					Position current;
+					for (current = this.getPos().getNextPos(Direction.SOUTH); game
+							.getTable().isEmpty(current); current = current
+							.getNextPos(Direction.SOUTH)) {
+						positions.add(new Position(current));
+					}
+					if (!player.getPieces().contains(
+							game.getTable().getTableCell(current))) {
+						positions.add(current);
+					}
+				} catch (Exception e) {
 				}
-			} catch (Exception e) {
 			}
-			try {
-				Position current;
-				for (current = this.getPos().getNextPos(Direction.SOUTH); game
-						.getTable().isEmpty(current); current = current
-						.getNextPos(Direction.SOUTH)) {
-					positions.add(new Position(current));
-				}
-				if (!player.getPieces().contains(
-						game.getTable().getTableCell(current))) {
-					positions.add(current);
-				}
-			} catch (Exception e) {
-			}
+
 		} else {
 			for (int i = 0; i < 8; i++) {
 				if (i != 1 && i != 7) {
@@ -108,6 +112,17 @@ public class Lance extends Piece {
 			}
 		}
 		return positions;
+	}
+
+	@Override
+	public void chechForUpgrade(Player player) {
+		if (player.getPlayerId() == 1) {
+			if (getPos().getY() >= 6)
+				upgraded = true;
+		} else {
+			if (getPos().getY() <= 3)
+				upgraded = true;
+		}
 	}
 
 }

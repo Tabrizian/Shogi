@@ -90,5 +90,9 @@ public class GoldGeneral extends Piece {
 			return positions;
 		}
 	}
+	@Override
+	public void chechForUpgrade(Player player) {
+		
+	}
 
 }

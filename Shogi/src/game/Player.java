@@ -60,4 +60,9 @@ public class Player {
 		return komadi;
 	}
 
+	public void checkAllForUpgrade(){
+		for (Piece piece : pieces) {
+			piece.chechForUpgrade(this);
+		}
+	}
 }

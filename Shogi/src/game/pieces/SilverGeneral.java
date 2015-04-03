@@ -146,5 +146,16 @@ public class SilverGeneral extends Piece {
 		}
 		return positions;
 	}
+	
+	@Override
+	public void chechForUpgrade(Player player) {
+		if (player.getPlayerId() == 1) {
+			if (getPos().getY() >= 6)
+				upgraded = true;
+		} else {
+			if (getPos().getY() <= 3)
+				upgraded = true;
+		}
+	}
 
 }

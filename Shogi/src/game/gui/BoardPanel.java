@@ -21,6 +21,7 @@ public class BoardPanel extends JPanel {
 	}
 	public void initialize(Table table){
 		layout = new GridLayout(9,9,2,2);
+		
 		setLayout(layout);
 		buttons = new JButton[9][9];
 		this.table = table;

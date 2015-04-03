@@ -37,6 +37,10 @@ public class None extends Piece{
 		return "-";
 	}
 	
+	@Override
+	public void chechForUpgrade(Player player) {
+		
+	}
 	
 
 }

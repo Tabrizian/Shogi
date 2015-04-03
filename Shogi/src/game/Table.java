@@ -255,8 +255,15 @@ public class Table extends JFrame {
 					board.getButtons()[i][j].setBorder(ORIGINAL_BORDER);;
 				}
 			}
+		}	
+	}
+	
+	public void update(){
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table[0].length; j++) {
+				getBoard().setButtonText(new Position(j,i));
+			}
 		}
-		
 	}
 
 }

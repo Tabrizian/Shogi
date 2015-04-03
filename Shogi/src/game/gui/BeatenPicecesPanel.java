@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ public class BeatenPicecesPanel extends JPanel {
 		Dimension dim = getPreferredSize();
 		dim.width = 50;
 		setPreferredSize(dim);
+		setBorder(BorderFactory.createLineBorder(Color.white,3));
 	}
 	
 	public void addToPanel(Piece piece,Table table,Game game){

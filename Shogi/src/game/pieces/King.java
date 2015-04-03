@@ -61,5 +61,10 @@ public class King extends Piece {
 		}
 		return positions;
 	}
+	
+	@Override
+	public void chechForUpgrade(Player player) {
+		
+	}
 
 }
