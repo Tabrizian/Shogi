@@ -158,4 +158,10 @@ public class SilverGeneral extends Piece {
 		}
 	}
 
+	@Override
+	public void mustUpgrade(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

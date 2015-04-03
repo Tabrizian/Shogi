@@ -126,4 +126,10 @@ public class Rook extends Piece {
 				upgraded = true;
 		}
 	}
+
+	@Override
+	public void mustUpgrade(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
 }

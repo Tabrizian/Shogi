@@ -185,4 +185,17 @@ public class Knight extends Piece {
 		}
 	}
 
+	@Override
+	public void mustUpgrade(Player player) {
+		if (player.getPlayerId() == 1) {
+			if (getPos().getY() >= 7)
+				upgraded = true;
+		} else {
+			if (getPos().getY() <= 1)
+				upgraded = true;
+		}
+	}
+	
+	
+
 }

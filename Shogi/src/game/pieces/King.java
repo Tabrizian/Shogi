@@ -67,4 +67,10 @@ public class King extends Piece {
 		
 	}
 
+	@Override
+	public void mustUpgrade(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

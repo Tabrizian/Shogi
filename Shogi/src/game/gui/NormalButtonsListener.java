@@ -278,6 +278,8 @@ public class NormalButtonsListener implements MouseListener {
 					table.getTableCell(pos).chechForUpgrade(player2);
 			}
 		}
+		player1.checkAllForMustUpgrade();
+		player2.checkAllForMustUpgrade();
 		table.update();
 	}
 

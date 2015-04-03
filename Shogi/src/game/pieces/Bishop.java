@@ -126,4 +126,9 @@ public class Bishop extends Piece {
 				upgraded = true;
 		}
 	}
+
+	@Override
+	public void mustUpgrade(Player player) {
+		
+	}
 }

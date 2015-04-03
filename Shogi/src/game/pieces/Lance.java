@@ -125,4 +125,16 @@ public class Lance extends Piece {
 		}
 	}
 
+	@Override
+	public void mustUpgrade(Player player) {
+		if (player.getPlayerId() == 1) {
+			if (getPos().getY() == 8)
+				upgraded = true;
+		} else {
+			if (getPos().getY() == 0)
+				upgraded = true;
+		}
+		
+	}
+
 }

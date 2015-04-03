@@ -11,6 +11,7 @@ public abstract class Piece {
 	protected abstract Position getDefaultPos();
 	public abstract ArrayList<Position> getAllowedCells(Game game,Player player);
 	public abstract void chechForUpgrade(Player player);
+	public abstract void mustUpgrade(Player player);
 	
 	public Position getPos() {
 		return pos;

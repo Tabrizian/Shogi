@@ -95,4 +95,10 @@ public class GoldGeneral extends Piece {
 		
 	}
 
+	@Override
+	public void mustUpgrade(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

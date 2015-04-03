@@ -65,4 +65,9 @@ public class Player {
 			piece.chechForUpgrade(this);
 		}
 	}
+	public void checkAllForMustUpgrade(){
+		for (Piece piece : pieces) {
+			piece.mustUpgrade(this);
+		}
+	}
 }

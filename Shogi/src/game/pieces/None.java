@@ -41,6 +41,11 @@ public class None extends Piece{
 	public void chechForUpgrade(Player player) {
 		
 	}
+	@Override
+	public void mustUpgrade(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
