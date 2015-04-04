@@ -131,4 +131,6 @@ public class Bishop extends Piece {
 	public void mustUpgrade(Player player) {
 		
 	}
+
+	
 }

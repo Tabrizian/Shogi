@@ -12,6 +12,17 @@ public abstract class Piece {
 	public abstract ArrayList<Position> getAllowedCells(Game game,Player player);
 	public abstract void chechForUpgrade(Player player);
 	public abstract void mustUpgrade(Player player);
+	public void downGrade(){
+		upgraded = false;
+	}
+	
+	public boolean isUpgraded(){
+		return upgraded;
+	}
+	
+	public void setUpgraded(boolean upgraded){
+		this.upgraded = upgraded;
+	}
 	
 	public Position getPos() {
 		return pos;
