@@ -102,7 +102,7 @@ public class Rook extends Piece {
 					Position currentPos = this.getPos().getNextPos(
 							Direction.values()[i]);
 					try {
-						if (player.getPieces().contains(
+						if (!player.getPieces().contains(
 								game.getTable().getTableCell(currentPos))
 								|| game.getTable().isEmpty(currentPos)) {
 							positions.add(new Position(currentPos));

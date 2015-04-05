@@ -133,7 +133,7 @@ public class NormalButtonsListener implements MouseListener {
 				} else if (table.getPlayer1Komadi().isPressed()
 						&& !table.isACellSelected()) {
 
-					if (table.isEmpty(pos)) {
+					if (table.isEmpty(pos) && !table.isKingCheck(player1, game)) {
 						boolean setted;
 						setted = table.setTableKomadiCell(pos, table
 								.getPlayer1Komadi().getPressedPiece());
@@ -240,7 +240,8 @@ public class NormalButtonsListener implements MouseListener {
 					}
 				} else if (table.getPlayer2Komadi().isPressed()
 						&& !table.isACellSelected()) {
-					if (table.isEmpty(pos)) {
+					
+					if (table.isEmpty(pos) && !table.isKingCheck(player2, game)) {
 						boolean setted;
 						setted = table.setTableKomadiCell(pos, table
 								.getPlayer2Komadi().getPressedPiece());

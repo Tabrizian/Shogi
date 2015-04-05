@@ -49,32 +49,20 @@ public class SilverGeneral extends Piece {
 	@Override
 	public ArrayList<Position> getAllowedCells(Game game, Player player) {
 		ArrayList<Position> positions = new ArrayList<>();
-		if (upgraded) {
+		if (!upgraded) {
 			if (game.getPlayer1() == player) {
 				for (int i = 0; i < 8; i++) {
 					if (i != 2 && i != 4 && i != 6) {
 						Position currentPos = this.getPos().getNextPos(
 								Direction.values()[i]);
 						try {
-							if (player == game.getPlayer1()) {
-								if (game.getPlayer2()
-										.getPieces()
-										.contains(
-												game.getTable().getTableCell(
-														currentPos))
-										|| game.getTable().isEmpty(currentPos)) {
-									positions.add(new Position(currentPos));
-								}
-							}
-							if (player == game.getPlayer2()) {
-								if (game.getPlayer1()
-										.getPieces()
-										.contains(
-												game.getTable().getTableCell(
-														currentPos))
-										|| game.getTable().isEmpty(currentPos)) {
-									positions.add(new Position(currentPos));
-								}
+							if (game.getPlayer2()
+									.getPieces()
+									.contains(
+											game.getTable().getTableCell(
+													currentPos))
+									|| game.getTable().isEmpty(currentPos)) {
+								positions.add(new Position(currentPos));
 							}
 						} catch (Exception e) {
 						}
@@ -146,7 +134,7 @@ public class SilverGeneral extends Piece {
 		}
 		return positions;
 	}
-	
+
 	@Override
 	public void chechForUpgrade(Player player) {
 		if (player.getPlayerId() == 1) {
@@ -161,7 +149,7 @@ public class SilverGeneral extends Piece {
 	@Override
 	public void mustUpgrade(Player player) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -25,7 +25,7 @@ public class BeatenPicecesPanel extends JPanel {
 	public BeatenPicecesPanel() {
 		komadi = new HashMap<>();
 		Dimension dim = getPreferredSize();
-		dim.width = 50;
+		dim.width = 60;
 		setPreferredSize(dim);
 		setBorder(BorderFactory.createLineBorder(Color.white,3));
 	}
