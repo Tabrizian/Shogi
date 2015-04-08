@@ -38,12 +38,9 @@ public class Table extends JFrame {
 
 		board.initialize(this);
 		add(board, BorderLayout.CENTER);
-		add(formPanel, BorderLayout.WEST);
-		JPanel beatenPanel = new JPanel();
-		beatenPanel.setLayout(new BorderLayout());
-		beatenPanel.add(player1Komadi, BorderLayout.EAST);
-		beatenPanel.add(player2Komadi, BorderLayout.WEST);
-		add(beatenPanel, BorderLayout.EAST);
+		add(formPanel, BorderLayout.SOUTH);
+		add(player1Komadi, BorderLayout.EAST);
+		add(player2Komadi, BorderLayout.WEST);
 	}
 
 	public void setTableCell(Position pos, Piece piece) {
@@ -221,7 +218,7 @@ public class Table extends JFrame {
 
 	public void showGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 500);
+		setSize(660, 540);
 		setVisible(true);
 	}
 

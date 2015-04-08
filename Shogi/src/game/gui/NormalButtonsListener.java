@@ -56,6 +56,7 @@ public class NormalButtonsListener implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
+		table.showMessage("");
 		if (arg0.getButton() == MouseEvent.BUTTON1) {
 			ableToUpgrade = false;
 			if (game.getTurn() % 2 == 0) {
@@ -164,7 +165,7 @@ public class NormalButtonsListener implements MouseListener {
 
 				}
 
-				// Sare gardane ...
+			// Sare gardane ...
 			} else {
 				if (table.isKingMate(game.getPlayer2(), game)) {
 					table.showMessage("You're CHECKMATE!");

@@ -17,48 +17,49 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class BeatenPicecesPanel extends JPanel {
-	
-	private HashMap<Piece,JButton> komadi;
+
+	private HashMap<Piece, JButton> komadi;
 	private BeatenButtonsListener listener;
 	private Game game;
 	private boolean pressed = false;
+
 	public BeatenPicecesPanel() {
 		komadi = new HashMap<>();
 		Dimension dim = getPreferredSize();
 		dim.width = 60;
 		setPreferredSize(dim);
-		setBorder(BorderFactory.createLineBorder(Color.white,3));
+		setBorder(BorderFactory.createLineBorder(Color.white, 3));
 	}
-	
-	public void addToPanel(Piece piece,Table table,Game game){
+
+	public void addToPanel(Piece piece, Table table, Game game) {
 		JButton button = new JButton(piece.toString());
-		komadi.put(piece,button);
-		listener = new BeatenButtonsListener(this, piece,table,game);
+		button.setPreferredSize(new Dimension(getWidth() - 10, 25));
+		komadi.put(piece, button);
+		listener = new BeatenButtonsListener(this, piece, table, game);
 		button.addActionListener(listener);
 		add(button);
 		this.game = game;
 	}
-	
-	public void removeFromPanel(Piece piece){
-		if(komadi.containsKey(piece)){
+
+	public void removeFromPanel(Piece piece) {
+		if (komadi.containsKey(piece)) {
 			remove(komadi.get(piece));
 			komadi.remove(piece);
 			repaint();
 		}
 	}
-	
-	public void addName(Player player){
-		if(player.getPlayerId() == 1){
+
+	public void addName(Player player) {
+		if (player.getPlayerId() == 1) {
 			JLabel label = new JLabel("Player 1");
 			add(label);
-		}
-		else{
+		} else {
 			JLabel label = new JLabel("Player 2");
 			add(label);
 		}
 	}
-	
-	public HashMap<Piece,JButton> getKomadi(){
+
+	public HashMap<Piece, JButton> getKomadi() {
 		return komadi;
 	}
 
@@ -69,17 +70,15 @@ public class BeatenPicecesPanel extends JPanel {
 	public void setPressed(boolean pressed) {
 		this.pressed = pressed;
 	}
-	
-	public Piece getPressedPiece(){
+
+	public Piece getPressedPiece() {
 		Set<Piece> pieces = komadi.keySet();
 		for (Iterator<Piece> iterator = pieces.iterator(); iterator.hasNext();) {
 			Piece piece = (Piece) iterator.next();
-			if(komadi.get(piece).getBackground() == Color.GREEN)
+			if (komadi.get(piece).getBackground() == Color.GREEN)
 				return piece;
 		}
 		return null;
 	}
 
-	
-	
 }

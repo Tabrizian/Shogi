@@ -4,6 +4,7 @@ import game.Table;
 import game.pieces.None;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
@@ -21,7 +22,6 @@ public class BoardPanel extends JPanel {
 	}
 	public void initialize(Table table){
 		layout = new GridLayout(9,9,2,2);
-		
 		setLayout(layout);
 		buttons = new JButton[9][9];
 		this.table = table;
