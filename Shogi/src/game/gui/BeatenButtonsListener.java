@@ -13,12 +13,8 @@ public class BeatenButtonsListener implements ActionListener {
 	private BeatenPicecesPanel panel;
 	private Piece piece;
 	private Table table;
-	private Player player;
 	private Game game;
 
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
 
 	public BeatenButtonsListener(BeatenPicecesPanel panel, Piece piece,
 			Table table, Game game) {
@@ -49,5 +45,7 @@ public class BeatenButtonsListener implements ActionListener {
 			panel.getKomadi().get(piece).setBackground(Table.ORIGINAL_COLOR);
 			panel.setPressed(false);
 		}
+		
+		table.update();
 	}
 }

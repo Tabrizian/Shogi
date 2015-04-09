@@ -28,7 +28,6 @@ public class BeatenPicecesPanel extends JPanel {
 		Dimension dim = getPreferredSize();
 		dim.width = 60;
 		setPreferredSize(dim);
-		setBorder(BorderFactory.createLineBorder(Color.white, 3));
 	}
 
 	public void addToPanel(Piece piece, Table table, Game game) {

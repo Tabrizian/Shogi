@@ -2,8 +2,9 @@ package game;
 
 import game.gui.BeatenPicecesPanel;
 import game.gui.BoardPanel;
-import game.gui.FormPanel;
+import game.gui.MessagePanel;
 import game.pieces.None;
+import game.pieces.Pawn;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,30 +13,31 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 public class Table extends JFrame {
 	private Piece[][] table;
 	private BoardPanel board;
-	private FormPanel formPanel;
+	private MessagePanel formPanel;
 	private BeatenPicecesPanel player1Komadi;
 	private BeatenPicecesPanel player2Komadi;
 	private Game game;
+	private MessagePanel turnViewer;
 	public static final Color ORIGINAL_COLOR = (new JButton()).getBackground();
 	public static final Border ORIGINAL_BORDER = (new JButton()).getBorder();
-	LayoutManager borderLayout;
+	private LayoutManager borderLayout;
 
 	public Table(Game game) {
 		super("SHOGI");
 		this.game = game;
-		formPanel = new FormPanel();
+		formPanel = new MessagePanel();
 		table = new Piece[9][9];
 		borderLayout = new BorderLayout();
 		board = new BoardPanel();
 		player1Komadi = new BeatenPicecesPanel();
 		player2Komadi = new BeatenPicecesPanel();
-
+		turnViewer = new MessagePanel();
+		add(turnViewer, BorderLayout.NORTH);
 		board.initialize(this);
 		add(board, BorderLayout.CENTER);
 		add(formPanel, BorderLayout.SOUTH);
@@ -52,12 +54,12 @@ public class Table extends JFrame {
 
 	public boolean setTableKomadiCell(Position pos, Piece piece) {
 		if (game.getPlayer1().getKomadi().contains(piece)) {
-			if (pos.getY() <= 5) {
+			if (pos.getY() <= 5 && checkKomadiConditions(piece, pos)) {
 				setTableCell(pos, piece);
 				return true;
 			}
 		} else if (game.getPlayer2().getKomadi().contains(piece)) {
-			if (pos.getY() >= 3) {
+			if (pos.getY() >= 3 && checkKomadiConditions(piece, pos)) {
 				setTableCell(pos, piece);
 				return true;
 			}
@@ -66,6 +68,60 @@ public class Table extends JFrame {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean checkKomadiConditions(Piece piece, Position pos) {
+		if (piece instanceof Pawn) {
+			for (int i = pos.getY() + 1; i != pos.getY(); i++) {
+				if (i == table.length)
+					i = 0;
+				Piece currentPiece = getTableCell(new Position(pos.getX(), i));
+				if (currentPiece instanceof Pawn) {
+					if (game.getTurn() % 2 == 0) {
+						if (!currentPiece.isUpgraded()
+								&& game.getPlayer1().getPieces()
+										.contains(currentPiece))
+							return false;
+					} else {
+
+						if (!currentPiece.isUpgraded()
+								&& game.getPlayer2().getPieces()
+										.contains(currentPiece))
+							return false;
+					}
+				}
+			}
+			if (game.getTurn() % 2 == 0) {
+				game.getPlayer1().getPieces()
+						.add(piece);
+				game.getPlayer1().getKomadi()
+						.remove(piece);
+			} else {
+				game.getPlayer2().getPieces()
+						.add(piece);
+				game.getPlayer2().getKomadi()
+						.remove(piece);
+			}
+			setTableCell(pos, piece);
+			if (game.getPlayer1().getPlayerId() == 1) {
+				if (isKingMate(game.getPlayer1(), game)) {
+					setTableCell(pos,new None(this,pos));
+					game.getPlayer1().getPieces().remove(piece);
+					game.getPlayer1().getKomadi().add(piece);
+					return false;
+				}
+
+			} else {
+				if (isKingMate(game.getPlayer2(), game)) {
+					setTableCell(pos,new None(this,pos));
+					game.getPlayer2().getPieces().remove(piece);
+					game.getPlayer2().getKomadi().add(piece);
+					return false;
+				}
+
+			}
+		}
+		return true;
 	}
 
 	public Piece getTableCell(Position pos) {
@@ -117,7 +173,6 @@ public class Table extends JFrame {
 			getTableCell(pos1).setPos(pos1);
 			getTableCell(pos2).setPos(pos2);
 
-
 			board.getButton(pos1).setText(getTableCell(pos1).toString());
 			board.getButton(pos2).setText(getTableCell(pos2).toString());
 			if (!isKingCheck(player, game)) {
@@ -149,7 +204,8 @@ public class Table extends JFrame {
 			board.getButton(pos1).setText(getTableCell(pos1).toString());
 			board.getButton(pos2).setText(getTableCell(pos2).toString());
 			if (!isKingCheck(player, game)) {
-				player.getKomadi().get(player.getKomadi().size() - 1).downGrade();
+				player.getKomadi().get(player.getKomadi().size() - 1)
+						.downGrade();
 				res[0] = true;
 				res[1] = true;
 				return res;
@@ -261,8 +317,21 @@ public class Table extends JFrame {
 		for (int i = 0; i < table.length; i++) {
 			for (int j = 0; j < table[0].length; j++) {
 				getBoard().setButtonText(new Position(j, i));
+				if (game.getTurn() % 2 == 0)
+					turnViewer.showMessage("Turn Player 1");
+				else
+					turnViewer.showMessage("Turn Player 2");
+				if (isKingCheck(game.getPlayer1(), game)
+						|| isKingCheck(game.getPlayer1(), game))
+					formPanel.showMessage("You're CHECK!");
+				else
+					formPanel.showMessage("");
 			}
 		}
+	}
+
+	public MessagePanel getTurnViewer() {
+		return turnViewer;
 	}
 
 }
