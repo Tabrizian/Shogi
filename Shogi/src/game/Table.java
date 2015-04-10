@@ -72,9 +72,7 @@ public class Table extends JFrame {
 
 	public boolean checkKomadiConditions(Piece piece, Position pos) {
 		if (piece instanceof Pawn) {
-			for (int i = pos.getY() + 1; i != pos.getY(); i++) {
-				if (i == table.length)
-					i = 0;
+			for (int i = pos.getY() + 1; i != pos.getY(); i++, i = i % 9) {
 				Piece currentPiece = getTableCell(new Position(pos.getX(), i));
 				if (currentPiece instanceof Pawn) {
 					if (game.getTurn() % 2 == 0) {
@@ -92,20 +90,16 @@ public class Table extends JFrame {
 				}
 			}
 			if (game.getTurn() % 2 == 0) {
-				game.getPlayer1().getPieces()
-						.add(piece);
-				game.getPlayer1().getKomadi()
-						.remove(piece);
+				game.getPlayer1().getPieces().add(piece);
+				game.getPlayer1().getKomadi().remove(piece);
 			} else {
-				game.getPlayer2().getPieces()
-						.add(piece);
-				game.getPlayer2().getKomadi()
-						.remove(piece);
+				game.getPlayer2().getPieces().add(piece);
+				game.getPlayer2().getKomadi().remove(piece);
 			}
 			setTableCell(pos, piece);
 			if (game.getPlayer1().getPlayerId() == 1) {
 				if (isKingMate(game.getPlayer1(), game)) {
-					setTableCell(pos,new None(this,pos));
+					setTableCell(pos, new None(this, pos));
 					game.getPlayer1().getPieces().remove(piece);
 					game.getPlayer1().getKomadi().add(piece);
 					return false;
@@ -113,13 +107,21 @@ public class Table extends JFrame {
 
 			} else {
 				if (isKingMate(game.getPlayer2(), game)) {
-					setTableCell(pos,new None(this,pos));
+					setTableCell(pos, new None(this, pos));
 					game.getPlayer2().getPieces().remove(piece);
 					game.getPlayer2().getKomadi().add(piece);
 					return false;
 				}
 
 			}
+
+		}
+		if (game.getTurn() % 2 == 0) {
+			game.getPlayer1().getPieces().remove(piece);
+			game.getPlayer1().getKomadi().add(piece);
+		} else {
+			game.getPlayer2().getPieces().remove(piece);
+			game.getPlayer2().getKomadi().add(piece);
 		}
 		return true;
 	}

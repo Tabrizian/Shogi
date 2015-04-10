@@ -3,6 +3,7 @@ package game.gui;
 import game.Game;
 import game.Piece;
 import game.Player;
+import game.Position;
 import game.Table;
 
 import java.awt.Color;
@@ -11,7 +12,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +33,7 @@ public class BeatenPicecesPanel extends JPanel {
 	public void addToPanel(Piece piece, Table table, Game game) {
 		JButton button = new JButton(piece.toString());
 		button.setPreferredSize(new Dimension(getWidth() - 10, 25));
+		piece.setPos(new Position(3, 3));
 		komadi.put(piece, button);
 		listener = new BeatenButtonsListener(this, piece, table, game);
 		button.addActionListener(listener);
